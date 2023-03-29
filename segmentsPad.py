@@ -183,27 +183,26 @@ def extractSegments(item, outputDict):
     #print(outFileName)
 
 
-# TODO we need this for the next file in the list
-    #if filePrefix_Rate in outputDict:
-    #    segmentList = outputDict[filePrefix_Rate][0]
-    #    sampleCount = 0
-    #    for seg in segmentList:
-    #        sampleCount += len(seg)
+    PADDING = 0
+    startSegment = PADDING
+    endSegment = cfg.SIG_LENGTH
+
+    if filePrefix_Rate in outputDict:
+        segmentList = outputDict[filePrefix_Rate][0]
+        sampleCount = 0
+        for seg in segmentList:
+            sampleCount += len(seg)
             
-    #    startSegment = sampleCount/fileSampleRate
-    #    endSegment = startSegment + cfg.SIG_LENGTH
+        startSegment = sampleCount/fileSampleRate + PADDING  #TODO, what happens when the segment doesn't have enough padding at the start of the file, won't work...
+        endSegment = startSegment + cfg.SIG_LENGTH
 
 
     #dateOutputResult = str(startSegment) + "\t"
 
 
-
     previousEnd = 0
     positiveCount = 0
 
-    PADDING = 10
-    startSegment = PADDING
-    endSegment = cfg.SIG_LENGTH
     for seg in segments:
         
         positiveCount +=1
@@ -214,11 +213,11 @@ def extractSegments(item, outputDict):
             end = seg['end']+PADDING
             if start < 0:
                 start = 0
-                startSegment = seg['start']
+                startSegment += seg['start']-PADDING
 
             if start < previousEnd:
                 diff = PADDING *2 - (previousEnd - start)
-                startSegment = endSegment + diff  #TODO need to calculate
+                startSegment = endSegment + diff
                 start = previousEnd
 
             #sampleDate = seg['sampleDate']
