@@ -11,9 +11,9 @@ import os
 # Variables
 samplingRate = 12000 #12k audio, but actual is a bit slower 
 #
-inputPath = "D:\\BirdNet Audio 2023\\*.flac"
+inputPath = "E:\\BirdNet Audio 2023\\Audio\\Blue Mountain33\\OS-33-1b_2023-03-11_T18-35-10.flac"
 #inputPath = "D:\\BirdNet Audio 2023\\*.flac"
-outputPath = "D:\\BirdNet Audio 2023\\Noise Reduction .6\\"
+outputPath = "E:\\BirdNet Audio 2023\\Audio\\Blue Mountain33\\"
 
 
 #inputPath = "C:\\Users\\Troy\\OneDrive\\GGOW Audio 2023\\*.mp3"
@@ -25,34 +25,27 @@ outputPath = "D:\\BirdNet Audio 2023\\Noise Reduction .6\\"
 #def writeOutputFile(outputFile, data, samplerate):
     #sf.write(outputFile, data, samplerate=samplerate)
 
-def processFile(file,lock):
+def processFile(file,p):
     print("Processing: " + file)
     start_time = datetime.now()
     fileParts = file.split("\\")
     fileName = fileParts[len(fileParts)-1]
-    outputFile = outputPath + fileName
+    outputFile = outputPath + fileName.replace("1b_", str(p) + "NR_")
     if os.path.exists(outputFile):
         return
-    lock.acquire()
     data, rate = sf.read(file)
-    lock.release()
-    reduced_noise = nr.reduce_noise(y=data, sr=rate, prop_decrease=.6)
-    lock.aquire()
+    reduced_noise = nr.reduce_noise(y=data, sr=rate, prop_decrease=p)
     sf.write(outputFile,reduced_noise, rate)
-    lock.release()
     delta_time = (datetime.now() - start_time).total_seconds()
     print("Time to NR file: {} seconds".format(delta_time))
 
 if __name__ == '__main__':
 
-    manager = Manager()
-    lock = manager.Lock()
-    processPool = Pool(processes=5)
+
     if not glob.glob(inputPath):
         print("RAW audio not found: " + inputPath)
-    for file in glob.glob(inputPath):
-        result = processPool.apply_async(processFile,(file,lock))
 
-    processPool.close()
-    processPool.join()
-
+    params = [.85,.95,.825,.875]
+    #params = [10,25,50,75,100,200,250]
+    for p in params:
+        processFile(inputPath,p)

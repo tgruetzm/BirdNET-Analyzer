@@ -167,12 +167,9 @@ def extractSegments(item, outputDict):
     # Status
     #print('Extracting segments from {}'.format(afile))
     # Open audio file
-    seg_cnt = 1
     segmentOutputList = []
     segmentOutputResults = []
-    dailyOutputResults = []
-    startSegment = 0
-    endSegment = cfg.SIG_LENGTH
+
 
     # Make output path
     outpath = cfg.OUTPUT_PATH #+ "_confidence_" + str(cfg.MIN_CONFIDENCE)
@@ -185,58 +182,56 @@ def extractSegments(item, outputDict):
     filePrefix_Rate = fileParts[len(fileParts)-1].split("_")[0] + "_" + str(fileSampleRate)
     #print(outFileName)
 
-    if filePrefix_Rate in outputDict:
-        segmentList = outputDict[filePrefix_Rate][0]
-        sampleCount = 0
-        for seg in segmentList:
-            sampleCount += len(seg)
+
+# TODO we need this for the next file in the list
+    #if filePrefix_Rate in outputDict:
+    #    segmentList = outputDict[filePrefix_Rate][0]
+    #    sampleCount = 0
+    #    for seg in segmentList:
+    #        sampleCount += len(seg)
             
-        startSegment = sampleCount/fileSampleRate
-        endSegment = startSegment + cfg.SIG_LENGTH
+    #    startSegment = sampleCount/fileSampleRate
+    #    endSegment = startSegment + cfg.SIG_LENGTH
 
 
-    dateOutputResult = str(startSegment) + "\t"
+    #dateOutputResult = str(startSegment) + "\t"
+
+
+
+    previousEnd = 0
     positiveCount = 0
+
+    PADDING = 10
+    startSegment = PADDING
+    endSegment = cfg.SIG_LENGTH
     for seg in segments:
         
         positiveCount +=1
         try:
             
-            # Get start and end times
-            #print("start:" + str(seg['start']))
-            #print("end:" + str(seg['end']))
-            #start = int(seg['start'] * cfg.SAMPLE_RATE)
-            #end = int(seg['end'] * cfg.SAMPLE_RATE)
-            #offset = ((seg_length * cfg.SAMPLE_RATE) - (end - start)) // 2
-            #start = max(0, start - offset)
-            #end = end + offset
-            #print("extracting: " + str(end-start) + " " + str(start))
-            start = seg['start']
-            end = seg['end']
+            
+            start = seg['start']-PADDING
+            end = seg['end']+PADDING
+            if start < 0:
+                start = 0
+                startSegment = seg['start']
+
+            if start < previousEnd:
+                diff = PADDING *2 - (previousEnd - start)
+                startSegment = endSegment + diff  #TODO need to calculate
+                start = previousEnd
+
             #sampleDate = seg['sampleDate']
-            sig, rate = audio.openAudioFileNoResample(afile, cfg.SAMPLE_RATE, duration=cfg.SIG_LENGTH, offset=start)  
+            sig, rate = audio.openAudioFileNoResample(afile, cfg.SAMPLE_RATE, duration=end-start, offset=start)  
+            endSegment = startSegment + cfg.SIG_LENGTH #TODO, what if we are EOF?
 
-            # Make sure segmengt is long enough
-            if end > start:
-
-                # Get segment raw audio from signal
-                #seg_sig = sig[int(start):int(end)]
-
-                # Save segment
-                seg_name = '{:.3f}_{}_{}.wav'.format(seg['confidence'], seg_cnt, seg['audio'].split(os.sep)[-1].rsplit('.', 1)[0])
-                #seg_path = os.path.join(outpath, seg_name)
-                #audio.saveSignal(sig, seg_path)
-                segmentOutputList.append(sig)
-                if end - start < cfg.SIG_LENGTH: # signal is cut off by EOF
-                    endSegment = startSegment + (end - start)
-                    print(startSegment)
-                    print(endSegment)
+            segmentOutputList.append(sig)
+ 
                     
+            segmentOutputResults.append(str(startSegment) + "\t" + str(endSegment) + "\t" + seg['text'] + "\n")
+            startSegment = endSegment + PADDING * 2
+            previousEnd = end
 
-                segmentOutputResults.append(str(startSegment) + "\t" + str(endSegment) + "\t" + seg['text'] + "\n")
-                startSegment = endSegment
-                endSegment += cfg.SIG_LENGTH
-                seg_cnt += 1
 
         except:
 
@@ -252,8 +247,8 @@ def extractSegments(item, outputDict):
     fileNameParts = afile.replace(".flac","").split("\\")
     dateParts = fileNameParts[len(fileParts) -1].split("_")
     fileDate = datetime.strptime(dateParts[1] + "_" + dateParts[2], '%Y-%m-%d_T%H-%M-%S')
-    dateOutputResult = dateOutputResult + str(endSegment-cfg.SIG_LENGTH) + "\t" + str(fileDate.date()) + "  " + str(positiveCount) + " positive detections\n"
-    segmentOutputResults.append(dateOutputResult)
+    #dateOutputResult = dateOutputResult + str(endSegment-cfg.SIG_LENGTH) + "\t" + str(fileDate.date()) + "  " + str(positiveCount) + " positive detections\n"
+    #segmentOutputResults.append(dateOutputResult)
 
     if filePrefix_Rate not in outputDict:
         outputDict[filePrefix_Rate] = ([],[])
