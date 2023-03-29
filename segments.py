@@ -131,8 +131,8 @@ def findSegments(afile, rfile):
             start = float(d[0])
             end = float(d[1])
             text = d[2].split("  ")
+            sampleDate = datetime.strptime(text[0], '%Y/%m/%d %H:%M:%S')
             species = text[1]
-            #print(species)
             confidence = float(text[2])
 
         elif rtype == 'r' and i > 0:
@@ -151,7 +151,7 @@ def findSegments(afile, rfile):
 
         # Check if confidence is high enough
         if confidence >= cfg.MIN_CONFIDENCE and (species in cfg.SPECIES_LIST or len(cfg.SPECIES_LIST) == 0):
-            segments.append({'audio': afile, 'start': start, 'end': end, 'species': species, 'confidence': confidence, 'text': d[2]})
+            segments.append({'audio': afile, 'start': start, 'end': end, 'species': species, 'confidence': confidence, 'text': d[2], 'sampleDate': sampleDate})
    
     return segments
 
@@ -165,16 +165,17 @@ def extractSegments(item, outputDict):
     cfg.setConfig(item[2])
 
     # Status
-    print('Extracting segments from {}'.format(afile))
+    #print('Extracting segments from {}'.format(afile))
     # Open audio file
     seg_cnt = 1
     segmentOutputList = []
     segmentOutputResults = []
+    dailyOutputResults = []
     startSegment = 0
     endSegment = cfg.SIG_LENGTH
 
     # Make output path
-    outpath = cfg.OUTPUT_PATH + "_confidence_" + str(cfg.MIN_CONFIDENCE)
+    outpath = cfg.OUTPUT_PATH #+ "_confidence_" + str(cfg.MIN_CONFIDENCE)
     if not os.path.exists(outpath):
         os.makedirs(outpath, exist_ok=True)
     
@@ -194,8 +195,11 @@ def extractSegments(item, outputDict):
         endSegment = startSegment + cfg.SIG_LENGTH
 
 
+    dateOutputResult = str(startSegment) + "\t"
+    positiveCount = 0
     for seg in segments:
-
+        
+        positiveCount +=1
         try:
             
             # Get start and end times
@@ -209,6 +213,7 @@ def extractSegments(item, outputDict):
             #print("extracting: " + str(end-start) + " " + str(start))
             start = seg['start']
             end = seg['end']
+            #sampleDate = seg['sampleDate']
             sig, rate = audio.openAudioFileNoResample(afile, cfg.SAMPLE_RATE, duration=cfg.SIG_LENGTH, offset=start)  
 
             # Make sure segmengt is long enough
@@ -226,6 +231,8 @@ def extractSegments(item, outputDict):
                     endSegment = startSegment + (end - start)
                     print(startSegment)
                     print(endSegment)
+                    
+
                 segmentOutputResults.append(str(startSegment) + "\t" + str(endSegment) + "\t" + seg['text'] + "\n")
                 startSegment = endSegment
                 endSegment += cfg.SIG_LENGTH
@@ -241,7 +248,12 @@ def extractSegments(item, outputDict):
             print(msg, flush=True)
             writeErrorLog(msg)
             break
-
+    
+    fileNameParts = afile.replace(".flac","").split("\\")
+    dateParts = fileNameParts[len(fileParts) -1].split("_")
+    fileDate = datetime.strptime(dateParts[1] + "_" + dateParts[2], '%Y-%m-%d_T%H-%M-%S')
+    dateOutputResult = dateOutputResult + str(endSegment-cfg.SIG_LENGTH) + "\t" + str(fileDate.date()) + "  " + str(positiveCount) + " positive detections\n"
+    segmentOutputResults.append(dateOutputResult)
 
     if filePrefix_Rate not in outputDict:
         outputDict[filePrefix_Rate] = ([],[])
@@ -344,7 +356,7 @@ if __name__ == '__main__':
         #print("sol len: " + str(len(segmentOutputList)))
         #print("sor len: " + str(len(segmentOutputResults)))
 
-        outpath = cfg.OUTPUT_PATH + "_confidence_" + str(cfg.MIN_CONFIDENCE)
+        outpath = cfg.OUTPUT_PATH #+ "_confidence_" + str(cfg.MIN_CONFIDENCE)
         outFile = outpath + "\\" + key + ".flac"
         outputAudioArray = np.hstack(segmentOutputList)
         audio.saveSignal(outputAudioArray, outFile,int(fileRate))
