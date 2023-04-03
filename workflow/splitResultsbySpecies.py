@@ -13,7 +13,7 @@ import sys
 
 filters = {
     'Bubo virginianus_Great Horned Owl': .1,
-    'Strix nebulosa_Great Gray Owl': .2,
+    'Strix nebulosa_Great Gray Owl': .2, #.2 seems to work best, .1 if trying to find very faint GGOWs
     'Aegolius acadicus_Northern Saw-whet Owl': .4,
     'Aegolius funereus_Boreal Owl': .4,
     'Asio flammeus_Short-eared Owl': .4,
@@ -71,13 +71,10 @@ if __name__ == '__main__':
                     print("creating: " + outputPath)
 
                 outputFile = inputPath + key + "\\" + fileName
-                #if glob.glob(outputFile):
-                    #print("output file already exists:" + outputFile)
-                #else:
-                #if not os.path.exists(outputFile):
-                with open(outputFile, 'w') as outputResults:
-                    print("writing: " + outputFile)
-                    for row in results[key]:
-                        outputResults.write(row)
+                if not os.path.exists(outputFile):
+                    with open(outputFile, 'w') as outputResults:
+                        print("writing: " + outputFile)
+                        for row in results[key]:
+                            outputResults.write(row)
                     
 

@@ -23,7 +23,7 @@ def openAudioFile(path, sample_rate=48000, offset=0.0, duration=None):
         #torch.set_num_threads(1)
         #sig, rate = librosa.load(path, sr=sample_rate, offset=offset, duration=duration, mono=True, res_type='kaiser_fast')#kaiser_best,'kaiser_fast'
         waveform, sample_rate = torchaudio.load(path, frame_offset=offset*fileSampleRate, num_frames=duration*fileSampleRate)
-        reduced_noise = nr.reduce_noise(y=waveform.numpy(), sr=fileSampleRate, prop_decrease=.95) #.8 seems to increase detections but also false positives
+        reduced_noise = nr.reduce_noise(y=waveform.numpy(), sr=fileSampleRate, prop_decrease=.95) # .95 seems to increase positives quite a bit, might be ideal.  Does require filtering by .2 min_conf to get false positives under control
         #defaultRolloff= 0.9475937167399596
         #.6 seems to be around 3700hz
         #.5 filters at 3000, seems to greatly increase detectability

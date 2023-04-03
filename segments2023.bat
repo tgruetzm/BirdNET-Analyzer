@@ -1,1 +1,1 @@
-python segmentsPad.py --threads 1 --slist "E:\BirdNet Audio 2023\species_list.txt" --results "E:\BirdNet Audio 2023\Audio\Blue Mountain33" --min_conf .1 --audio "E:\BirdNet Audio 2023\Audio\Blue Mountain33" --o "E:\BirdNet Audio 2023\segTest33"
+python segments.py --threads 1 --slist "E:\BirdNet Audio 2023\speciesGGOW.txt" --results "E:\BirdNet Audio 2023\Audio\Missions\5-2" --min_conf .1 --audio "E:\BirdNet Audio 2023\Audio\Missions\5-2" --o "E:\BirdNet Audio 2023\SegmentsGGOWLong"

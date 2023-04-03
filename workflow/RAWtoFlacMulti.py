@@ -16,7 +16,7 @@ import os
 # Variables
 samplingRate = 12000 #12k audio, but actual is a bit slower 
 
-inputPath = "F:\\2023 GGOW audio raw import\\*.pcm"
+inputPath = "D:\\2023 GGOW audio raw import\\*.pcm"
 #inputPath  = "D:\\24k PCM audio\\*.pcm" 
 #outputPath = "E:\\BirdNet-Audio\\"
 #outputPath = "E:\\BirdNet-Audio\\Outdoor Tests\\"
@@ -53,7 +53,7 @@ def readFile(file, lock):
 if __name__ == '__main__':
     manager = Manager()
     lock = manager.Lock()
-    processPool = Pool(processes=3)
+    processPool = Pool(processes=2)
     if not glob.glob(outputPath):
         print("Creating: " + outputPath)
         os.mkdir(outputPath)
