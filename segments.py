@@ -11,6 +11,7 @@ import audio
 from datetime import datetime
 import functools
 import librosa
+import noisereduce as nr
 
 # Set numpy random seed
 np.random.seed(cfg.RANDOM_SEED)
@@ -182,9 +183,13 @@ def extractSegments(item, outputDict):
     filePrefix_Rate = fileParts[len(fileParts)-1].split("_")[0] + "_" + str(fileSampleRate)
     #print(outFileName)
 
-
+    outpath = cfg.OUTPUT_PATH #+ "_confidence_" + str(cfg.MIN_CONFIDENCE)
+    outFile = outpath + "\\" + filePrefix_Rate + ".flac"
+    if os.path.exists(outFile):# only write file if it doesn't exist
+        return
+    
     #3 seconds is a good default
-    PADDING = 10*60
+    PADDING = cfg.PADDING
     startSegment = PADDING
     endSegment = cfg.SIG_LENGTH
 
@@ -211,7 +216,7 @@ def extractSegments(item, outputDict):
             
             start = seg['start']-PADDING
             end = seg['end']+PADDING
-            if start < 0:
+            if start < 0 and seg == segments[0]:
                 start = 0
                 startSegment += seg['start']-PADDING
 
@@ -293,6 +298,7 @@ if __name__ == '__main__':
     parser.add_argument('--min_conf', type=float, default=0.1, help='Minimum confidence threshold. Values in [0.01, 0.99]. Defaults to 0.1.')
     parser.add_argument('--max_segments', type=int, default=100, help='Number of randomly extracted segments per species.')
     parser.add_argument('--seg_length', type=float, default=3.0, help='Length of extracted segments in seconds. Defaults to 3.0.')
+    parser.add_argument('--padding', type=float, default=5.0, help='Length of padding before and after segment in seconds. Defaults to 5.0.')
     parser.add_argument('--threads', type=int, default=4, help='Number of CPU threads.')
     parser.add_argument('--slist', default='', help='Path to species list file or folder. If folder is provided, species list needs to be named \"species_list.txt\".')
     
@@ -307,6 +313,8 @@ if __name__ == '__main__':
 
     # Set number of threads
     cfg.CPU_THREADS = int(args.threads)
+
+    cfg.PADDING = args.padding
 
     # Set confidence threshold
     cfg.MIN_CONFIDENCE = max(0.01, min(0.99, float(args.min_conf)))
@@ -354,7 +362,8 @@ if __name__ == '__main__':
         outFile = outpath + "\\" + key + ".flac"
         if not os.path.exists(outFile):# only write file if it doesn't exist
             outputAudioArray = np.hstack(segmentOutputList)
-            audio.saveSignal(outputAudioArray, outFile,int(fileRate))
+            reduced_noise = nr.reduce_noise(y=outputAudioArray, sr=int(fileRate), prop_decrease=.5) #.5 sounds good without reducing the signal too much
+            audio.saveSignal(reduced_noise, outFile,int(fileRate))
             out_string = ''
             for s in segmentOutputResults:
                 out_string += s

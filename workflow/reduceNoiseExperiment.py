@@ -11,9 +11,9 @@ import os
 # Variables
 samplingRate = 12000 #12k audio, but actual is a bit slower 
 #
-inputPath = "E:\\BirdNet Audio 2023\\Audio\\Blue Mountain33\\OS-33-1b_2023-03-11_T18-35-10.flac"
+inputPath = "E:\\BirdNet Audio 2023\\Audio\\Missions\\OS-27-2FC_2023-04-02_T19-06-11.flac"
 #inputPath = "D:\\BirdNet Audio 2023\\*.flac"
-outputPath = "E:\\BirdNet Audio 2023\\Audio\\Blue Mountain33\\"
+outputPath = "E:\\BirdNet Audio 2023\\Audio\\Missions\\"
 
 
 #inputPath = "C:\\Users\\Troy\\OneDrive\\GGOW Audio 2023\\*.mp3"
@@ -30,11 +30,12 @@ def processFile(file,p):
     start_time = datetime.now()
     fileParts = file.split("\\")
     fileName = fileParts[len(fileParts)-1]
-    outputFile = outputPath + fileName.replace("1b_", str(p) + "NR_")
-    if os.path.exists(outputFile):
-        return
+    outputFile = outputPath + fileName.replace("2FC", str(p) + "2FCNR")
+    #if os.path.exists(outputFile):
+    #    return
     data, rate = sf.read(file)
     reduced_noise = nr.reduce_noise(y=data, sr=rate, prop_decrease=p)
+    print(outputFile)
     sf.write(outputFile,reduced_noise, rate)
     delta_time = (datetime.now() - start_time).total_seconds()
     print("Time to NR file: {} seconds".format(delta_time))
@@ -45,7 +46,7 @@ if __name__ == '__main__':
     if not glob.glob(inputPath):
         print("RAW audio not found: " + inputPath)
 
-    params = [.85,.95,.825,.875]
+    params = [.2,.4,.6,.8,.95]
     #params = [10,25,50,75,100,200,250]
     for p in params:
         processFile(inputPath,p)

@@ -6,21 +6,16 @@ import sys
 
 
 
-
-
-#inputPath = "E:\\BirdNet Audio GGOW 2023\\Audio"
-
-
 filters = {
     'Bubo virginianus_Great Horned Owl': .1,
     'Strix nebulosa_Great Gray Owl': .2, #.2 seems to work best, .1 if trying to find very faint GGOWs
-    'Aegolius acadicus_Northern Saw-whet Owl': .4,
+    'Aegolius acadicus_Northern Saw-whet Owl': .3,
     'Aegolius funereus_Boreal Owl': .4,
     'Asio flammeus_Short-eared Owl': .4,
     'Asio otus_Long-eared Owl': .4,
     'Glaucidium gnoma_Northern Pygmy-Owl': .5,
     'Megascops asio_Eastern Screech-Owl': .4,
-    'Megascops kennicottii_Western Screech-Owl': .4,
+    'Megascops kennicottii_Western Screech-Owl': .3,
     'Psiloscops flammeolus_Flammulated Owl': .4,
     'Surnia ulula_Northern Hawk Owl': .4,
     'Tyto alba_Barn Owl': .4,

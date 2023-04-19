@@ -61,6 +61,8 @@ SAMPLE_RATE = 48000
 # We're using 3-second chunks
 SIG_LENGTH = 3.0 
 
+PADDING = 3.0
+
 # Define overlap between consecutive chunks <3.0; 0 = no overlap
 SIG_OVERLAP = 0 
 
@@ -136,6 +138,7 @@ def getConfig():
         'LABELS_FILE': LABELS_FILE,
         'SAMPLE_RATE': SAMPLE_RATE,
         'SIG_LENGTH': SIG_LENGTH,
+        'PADDING': PADDING,
         'SIG_OVERLAP': SIG_OVERLAP,
         'SIG_MINLEN': SIG_MINLEN,
         'LATITUDE': LATITUDE,
@@ -197,6 +200,7 @@ def setConfig(c):
     LABELS_FILE = c['LABELS_FILE']
     SAMPLE_RATE = c['SAMPLE_RATE']
     SIG_LENGTH = c['SIG_LENGTH']
+    PADDING = c['PADDING']
     SIG_OVERLAP = c['SIG_OVERLAP']
     SIG_MINLEN = c['SIG_MINLEN']
     LATITUDE = c['LATITUDE']

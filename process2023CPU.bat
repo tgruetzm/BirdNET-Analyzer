@@ -1,1 +1,1 @@
-python "analyzeCPU.py" --threads 12 --overlap 0 --rtype audacity --slist "E:\BirdNet Audio GGOW 2023\species_list.txt" --sensitivity 1.5 --min_conf .1 --i "E:\BirdNet Audio GGOW 2023" --o "E:\BirdNet Audio GGOW 2023"
+python "analyzeCPU.py" --threads 12 --overlap 0 --rtype audacity --slist "E:\BirdNet Audio 2023\species_list.txt" --sensitivity 1.5 --min_conf .1 --i "E:\BirdNet Audio 2023\Audio" --o "E:\BirdNet Audio 2023\Audio"

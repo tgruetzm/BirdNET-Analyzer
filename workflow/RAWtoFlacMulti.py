@@ -20,7 +20,7 @@ inputPath = "D:\\2023 GGOW audio raw import\\*.pcm"
 #inputPath  = "D:\\24k PCM audio\\*.pcm" 
 #outputPath = "E:\\BirdNet-Audio\\"
 #outputPath = "E:\\BirdNet-Audio\\Outdoor Tests\\"
-outputPath = "D:\\BirdNet Audio 2023\\"
+outputPath = "D:\\BirdNet Audio\\2023\\"
 
 
 def readFile(file, lock):

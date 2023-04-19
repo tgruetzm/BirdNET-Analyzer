@@ -14,8 +14,8 @@ segmentsScript = '..\segments.py'
 # Directories are used for location names
 baseDirectory = "E:\\BirdNet Audio 2023\\"
 inputPath = baseDirectory + "Audio\\*\\"
-speciesList = {("Strix varia_Barred Owl",baseDirectory + "speciesBDOW.txt"),("Strix nebulosa_Great Gray Owl",baseDirectory + "speciesGGOW.txt"),("Asio otus_Long-eared Owl",baseDirectory + "speciesLEOW.txt"),
-               ("Glaucidium gnoma_Northern Pygmy-Owl",baseDirectory + "speciesNOPO.txt"),("Aegolius acadicus_Northern Saw-whet Owl",baseDirectory + "speciesNSWO.txt")}
+speciesList = {("Strix varia_Barred Owl",baseDirectory + "speciesBADO.txt"),("Strix nebulosa_Great Gray Owl",baseDirectory + "speciesGGOW.txt"),("Asio otus_Long-eared Owl",baseDirectory + "speciesLEOW.txt"),
+               ("Glaucidium gnoma_Northern Pygmy-Owl",baseDirectory + "speciesNOPO.txt"),("Aegolius acadicus_Northern Saw-whet Owl",baseDirectory + "speciesNSWO.txt"),("Megascops kennicottii_Western Screech-Owl",baseDirectory + "speciesWESO.txt")}
 
 
 def processLocation(directory):
@@ -26,18 +26,18 @@ def processLocation(directory):
     subprocess.call(['python', splitResultsScript,directory])
 
     for species in speciesList:
-        outputDirectoryBase =baseDirectory + "Segments" +"\\" + location
+        outputDirectoryBase =baseDirectory + "Positives" +"\\" + location
         if not glob.glob(outputDirectoryBase):
             print("Creating: " + outputDirectoryBase)
             os.mkdir(outputDirectoryBase)
-        outputDirectory =baseDirectory + "Segments" +"\\" + location + "\\" + species[0]
+        outputDirectory =baseDirectory + "Positives" +"\\" + location + "\\" + species[0]
         if not glob.glob(outputDirectory):
             print("Creating: " + outputDirectory)
             os.mkdir(outputDirectory)
 
         print("results: " + directory + species[0])
         print("segments for: " + outputDirectory)
-        subprocess.call(['python',segmentsScript,"--min_conf",".05","--threads","1", "--slist",species[1],"--results",directory + species[0],"--audio", directory, "--o", outputDirectory])
+        subprocess.call(['python',segmentsScript,"--min_conf",".05","--threads","1","--padding","3.0", "--slist",species[1],"--results",directory + species[0],"--audio", directory, "--o", outputDirectory])
 
 
 
