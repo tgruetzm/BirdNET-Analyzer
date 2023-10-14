@@ -13,6 +13,9 @@ import functools
 import librosa
 import noisereduce as nr
 
+
+ ##TODO line 83!!! this is for filtering only, don't forget about this!!!!
+
 # Set numpy random seed
 np.random.seed(cfg.RANDOM_SEED)
 
@@ -79,8 +82,9 @@ def parseFolders(apath, rpath, allowed_filetypes={'audio': ['wav', 'flac', 'mp3'
 
     # Convert to list
     flist = []
+    #print('Using custom starts with filter!!! OS-11-5')
     for f in data:
-        if len(data[f]['result']) > 0:
+        if len(data[f]['result']) > 0 :#and f.startswith('OS-11-5'):
             flist.append(data[f])
 
     print('Found {} audio files with valid result file.'.format(len(flist)))

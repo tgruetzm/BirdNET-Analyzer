@@ -6,8 +6,9 @@ import sys
 
 
 
+
 filters = {
-    'Bubo virginianus_Great Horned Owl': .1,
+    'Bubo virginianus_Great Horned Owl': .4,
     'Strix nebulosa_Great Gray Owl': .2, #.2 seems to work best, .1 if trying to find very faint GGOWs
     'Aegolius acadicus_Northern Saw-whet Owl': .3,
     'Aegolius funereus_Boreal Owl': .4,
@@ -31,6 +32,9 @@ def processLine(line):
     initial = parts[0]
     species = parts[1]
     probability = parts[2]
+
+    if species not in filters:
+        return
     if species not in results:
         results[species] = []
     

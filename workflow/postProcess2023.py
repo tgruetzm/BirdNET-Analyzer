@@ -3,19 +3,18 @@
 import glob
 import subprocess
 import os
-import soundfile
 
-# define the path to the Python script you want to call
 splitResultsScript = 'splitResultsbySpecies.py'
 segmentsScript = '..\segments.py'
 
 #python segments.py --threads 1 --slist "E:\BirdNet Audio GGOW 2023\species_list.txt" --results "E:\BirdNet Audio GGOW 2023\Missions\Strix varia_Barred Owl" --min_conf .1 --audio "E:\BirdNet Audio GGOW 2023\Missions" --o "E:\BirdNet Audio GGOW 2023\Missions-BDOW"
 
-# Directories are used for location names
+# Directories are used for location namespy
 baseDirectory = "E:\\BirdNet Audio 2023\\"
 inputPath = baseDirectory + "Audio\\*\\"
 speciesList = {("Strix varia_Barred Owl",baseDirectory + "speciesBADO.txt"),("Strix nebulosa_Great Gray Owl",baseDirectory + "speciesGGOW.txt"),("Asio otus_Long-eared Owl",baseDirectory + "speciesLEOW.txt"),
-               ("Glaucidium gnoma_Northern Pygmy-Owl",baseDirectory + "speciesNOPO.txt"),("Aegolius acadicus_Northern Saw-whet Owl",baseDirectory + "speciesNSWO.txt"),("Megascops kennicottii_Western Screech-Owl",baseDirectory + "speciesWESO.txt")}
+               ("Glaucidium gnoma_Northern Pygmy-Owl",baseDirectory + "speciesNOPO.txt"),("Aegolius acadicus_Northern Saw-whet Owl",baseDirectory + "speciesNSWO.txt"),("Megascops kennicottii_Western Screech-Owl",baseDirectory + "speciesWESO.txt"),
+               ("Aegolius funereus_Boreal Owl",baseDirectory + "speciesBOOW.txt"),("Bubo virginianus_Great Horned Owl",baseDirectory + "speciesGHOW.txt"),("Psiloscops flammeolus_Flammulated Owl",baseDirectory + "speciesFLOW.txt")}
 
 
 def processLocation(directory):
@@ -37,7 +36,7 @@ def processLocation(directory):
 
         print("results: " + directory + species[0])
         print("segments for: " + outputDirectory)
-        subprocess.call(['python',segmentsScript,"--min_conf",".05","--threads","1","--padding","3.0", "--slist",species[1],"--results",directory + species[0],"--audio", directory, "--o", outputDirectory])
+        subprocess.call(['python',segmentsScript,"--min_conf",".1","--threads","1","--padding","3.0", "--slist",species[1],"--results",directory + species[0],"--audio", directory, "--o", outputDirectory])
 
 
 

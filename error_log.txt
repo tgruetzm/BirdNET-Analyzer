@@ -4714,3 +4714,19 @@ Call arguments received by layer "ADVANCED_SPEC1" "                 f"(type Line
   • args=('tf.Tensor(shape=(0,), dtype=float32)',)
   • kwargs={'training': 'False'}
 
+Error: Cannot analyze audio file E:\BirdNet Audio 2023\Audio\Testing\OS-33-1_2023-03-11_T18-35-10.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer\model.py", line 144, in predict
+    loadModel()
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer\model.py", line 81, in loadModel
+    PBMODEL = keras.models.load_model(cfg.MODEL_PATH, compile=False)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\utils\traceback_utils.py", line 70, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\saving\save.py", line 226, in load_model
+    raise IOError(
+OSError: No file or directory found at C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer\checkpoints/V2.3/BirdNET_GLOBAL_3K_V2.3_Model
+

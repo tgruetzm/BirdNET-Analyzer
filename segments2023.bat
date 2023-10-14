@@ -1,1 +1,1 @@
-python segments.py --padding 900  --threads 1 --slist "E:\BirdNet Audio 2023\speciesGGOW.txt" --results "E:\BirdNet Audio 2023\Audio\Missions\5-2" --min_conf .1 --audio "E:\BirdNet Audio 2023\Audio\Missions\5-2" --o "E:\BirdNet Audio 2023\PositivesGGOWLong"
+python segments.py --padding 30  --threads 1 --slist "E:\BirdNet Audio 2023\speciesGGOW.txt" --results "E:\BirdNet Audio 2023\Audio\Missions\Strix nebulosa_Great Gray Owl" --min_conf .2 --audio "E:\BirdNet Audio 2023\Audio\Missions" --o "E:\BirdNet Audio 2023\PositivesGGOWLong"
