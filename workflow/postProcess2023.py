@@ -14,7 +14,7 @@ baseDirectory = "E:\\BirdNet Audio 2023\\"
 inputPath = baseDirectory + "Audio\\*\\"
 speciesList = {("Strix varia_Barred Owl",baseDirectory + "speciesBADO.txt"),("Strix nebulosa_Great Gray Owl",baseDirectory + "speciesGGOW.txt"),("Asio otus_Long-eared Owl",baseDirectory + "speciesLEOW.txt"),
                ("Glaucidium gnoma_Northern Pygmy-Owl",baseDirectory + "speciesNOPO.txt"),("Aegolius acadicus_Northern Saw-whet Owl",baseDirectory + "speciesNSWO.txt"),("Megascops kennicottii_Western Screech-Owl",baseDirectory + "speciesWESO.txt"),
-               ("Aegolius funereus_Boreal Owl",baseDirectory + "speciesBOOW.txt"),("Bubo virginianus_Great Horned Owl",baseDirectory + "speciesGHOW.txt"),("Psiloscops flammeolus_Flammulated Owl",baseDirectory + "speciesFLOW.txt")}
+               ("Aegolius funereus_Boreal Owl",baseDirectory + "speciesBOOW.txt"),("Bubo virginianus_Great Horned Owl",baseDirectory + "speciesGHOW.txt"),("Psiloscops flammeolus_Flammulated Owl",baseDirectory + "speciesFLOW.txt"),("Tyto alba_Barn Owl",baseDirectory + "speciesBNOW.txt")}
 
 
 def processLocation(directory):
