@@ -509,6 +509,7 @@ if __name__ == "__main__":
     # support fork() and thus each process has to
     # have its own config. USE LINUX!
     flist = [(f, cfg.getConfig()) for f in cfg.FILE_LIST]
+    start_time = datetime.datetime.now()
 
     # Analyze files
     if cfg.CPU_THREADS < 2:
@@ -518,6 +519,8 @@ if __name__ == "__main__":
         with Pool(cfg.CPU_THREADS) as p:
             p.map(analyzeFile, flist)
 
+    delta_time = (datetime.datetime.now() - start_time).total_seconds()
+    print("Finished all files in {:.2f} seconds".format(delta_time), flush=True)
     # A few examples to test
     # python3 analyze.py --i example/ --o example/ --slist example/ --min_conf 0.5 --threads 4
     # python3 analyze.py --i example/soundscape.wav --o example/soundscape.BirdNET.selection.table.txt --slist example/species_list.txt --threads 8
