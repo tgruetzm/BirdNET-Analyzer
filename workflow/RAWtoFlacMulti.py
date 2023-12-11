@@ -16,11 +16,11 @@ import os
 # Variables
 samplingRate = 12000 #12k audio, but actual is a bit slower 
 
-inputPath = "D:\\2023 GGOW audio raw import\\*.pcm"
+inputPath = "D:\\NAS\\2023 GGOW audio raw import\\*.pcm"
 #inputPath  = "D:\\24k PCM audio\\*.pcm" 
 #outputPath = "E:\\BirdNet-Audio\\"
 #outputPath = "E:\\BirdNet-Audio\\Outdoor Tests\\"
-outputPath = "D:\\ORI Audio\\2023\\"
+outputPath = "D:\\NAS\\ORI Audio\\2023\\"
 
 
 def readFile(file, lock):
