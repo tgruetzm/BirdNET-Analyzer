@@ -1,6 +1,11 @@
 import concurrent.futures
 import os
 import sys
+
+if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+    # divert stdout & stderr to logs.txt file since we have no console when deployed
+    sys.stderr = sys.stdout = open("logs.txt", "w")
+
 from multiprocessing import freeze_support
 from pathlib import Path
 
@@ -16,9 +21,13 @@ import utils
 from train import trainModel
 
 _WINDOW: webview.Window
-OUTPUT_TYPE_MAP = {"Raven selection table": "table", "Audacity": "audacity", "R": "r", "CSV": "csv"}
-ORIGINAL_MODEL_PATH = cfg.MODEL_PATH
-ORIGINAL_MDATA_MODEL_PATH = cfg.MDATA_MODEL_PATH
+OUTPUT_TYPE_MAP = {
+    "Raven selection table": "table",
+    "Audacity": "audacity",
+    "R": "r",
+    "CSV": "csv",
+    "Kaleidoscope": "kaleidoscope",
+}
 ORIGINAL_LABELS_FILE = cfg.LABELS_FILE
 ORIGINAL_TRANSLATED_LABELS_PATH = cfg.TRANSLATED_LABELS_PATH
 
@@ -42,6 +51,21 @@ def validate(value, msg):
     """
     if not value:
         raise gr.Error(msg)
+
+
+def run_species_list(out_path, filename, lat, lon, week, use_yearlong, sf_thresh, sortby):
+    validate(out_path, "Please select a directory for the species list.")
+
+    species.run(
+        os.path.join(out_path, filename if filename else "species_list.txt"),
+        lat,
+        lon,
+        -1 if use_yearlong else week,
+        sf_thresh,
+        sortby,
+    )
+
+    gr.Info(f"Species list saved at {cfg.OUTPUT_PATH}")
 
 
 def runSingleFileAnalysis(
@@ -208,7 +232,9 @@ def runAnalysis(
             raise gr.Error("No custom classifier selected.")
 
         # Set custom classifier?
-        cfg.CUSTOM_CLASSIFIER = custom_classifier_file  # we treat this as absolute path, so no need to join with dirname
+        cfg.CUSTOM_CLASSIFIER = (
+            custom_classifier_file  # we treat this as absolute path, so no need to join with dirname
+        )
         cfg.LABELS_FILE = custom_classifier_file.replace(".tflite", "_Labels.txt")  # same for labels file
         cfg.LABELS = utils.readLines(cfg.LABELS_FILE)
         cfg.LATITUDE = -1
@@ -222,7 +248,9 @@ def runAnalysis(
         cfg.CUSTOM_CLASSIFIER = None
 
     # Load translated labels
-    lfile = os.path.join(cfg.TRANSLATED_LABELS_PATH, os.path.basename(cfg.LABELS_FILE).replace(".txt", f"_{locale}.txt"))
+    lfile = os.path.join(
+        cfg.TRANSLATED_LABELS_PATH, os.path.basename(cfg.LABELS_FILE).replace(".txt", f"_{locale}.txt")
+    )
     if not locale in ["en"] and os.path.isfile(lfile):
         cfg.TRANSLATED_LABELS = utils.readLines(lfile)
     else:
@@ -329,31 +357,31 @@ def show_species_choice(choice: str):
     """
     if choice == _CUSTOM_SPECIES:
         return [
-            gr.Row.update(visible=False),
-            gr.File.update(visible=True),
-            gr.Column.update(visible=False),
-            gr.Column.update(visible=False),
+            gr.Row(visible=False),
+            gr.File(visible=True),
+            gr.Column(visible=False),
+            gr.Column(visible=False),
         ]
     elif choice == _PREDICT_SPECIES:
         return [
-            gr.Row.update(visible=True),
-            gr.File.update(visible=False),
-            gr.Column.update(visible=False),
-            gr.Column.update(visible=False),
+            gr.Row(visible=True),
+            gr.File(visible=False),
+            gr.Column(visible=False),
+            gr.Column(visible=False),
         ]
     elif choice == _CUSTOM_CLASSIFIER:
         return [
-            gr.Row.update(visible=False),
-            gr.File.update(visible=False),
-            gr.Column.update(visible=True),
-            gr.Column.update(visible=False),
+            gr.Row(visible=False),
+            gr.File(visible=False),
+            gr.Column(visible=True),
+            gr.Column(visible=False),
         ]
 
     return [
-        gr.Row.update(visible=False),
-        gr.File.update(visible=False),
-        gr.Column.update(visible=False),
-        gr.Column.update(visible=True),
+        gr.Row(visible=False),
+        gr.File(visible=False),
+        gr.Column(visible=False),
+        gr.Column(visible=True),
     ]
 
 
@@ -432,7 +460,27 @@ def select_directory(collect_files=True):
 
 
 def start_training(
-    data_dir, output_dir, classifier_name, epochs, batch_size, learning_rate, hidden_units, progress=gr.Progress()
+    data_dir,
+    crop_mode,
+    crop_overlap,
+    output_dir,
+    classifier_name,
+    model_save_mode,
+    cache_mode,
+    cache_file,
+    cache_file_name,
+    autotune,
+    autotune_trials,
+    autotune_executions_per_trials,
+    epochs,
+    batch_size,
+    learning_rate,
+    hidden_units,
+    use_mixup,
+    upsampling_ratio,
+    upsampling_mode,
+    model_format,
+    progress=gr.Progress(),
 ):
     """Starts the training of a custom classifier.
 
@@ -468,15 +516,27 @@ def start_training(
     if progress is not None:
         progress((0, epochs), desc="Loading data & building classifier", unit="epoch")
 
-    if not classifier_name.endswith(".tflite"):
-        classifier_name += ".tflite"
-
     cfg.TRAIN_DATA_PATH = data_dir
+    cfg.SAMPLE_CROP_MODE = crop_mode
+    cfg.SIG_OVERLAP = crop_overlap
     cfg.CUSTOM_CLASSIFIER = str(Path(output_dir) / classifier_name)
     cfg.TRAIN_EPOCHS = int(epochs)
     cfg.TRAIN_BATCH_SIZE = int(batch_size)
     cfg.TRAIN_LEARNING_RATE = learning_rate
     cfg.TRAIN_HIDDEN_UNITS = int(hidden_units)
+    cfg.TRAIN_WITH_MIXUP = use_mixup
+    cfg.UPSAMPLING_RATIO = min(max(0, upsampling_ratio), 1)
+    cfg.UPSAMPLING_MODE = upsampling_mode
+    cfg.TRAINED_MODEL_OUTPUT_FORMAT = model_format
+
+    cfg.TRAINED_MODEL_SAVE_MODE = model_save_mode
+    cfg.TRAIN_CACHE_MODE = cache_mode
+    cfg.TRAIN_CACHE_FILE = os.path.join(cache_file, cache_file_name) if cache_mode == "save" else cache_file
+    cfg.TFLITE_THREADS = 4  # Set this to 4 to speed things up a bit
+
+    cfg.AUTOTUNE = autotune
+    cfg.AUTOTUNE_TRIALS = autotune_trials
+    cfg.AUTOTUNE_EXECUTIONS_PER_TRIAL = autotune_executions_per_trials
 
     def progression(epoch, logs=None):
         if progress is not None:
@@ -487,13 +547,16 @@ def start_training(
 
     history = trainModel(on_epoch_end=progression)
 
-    precision = history.history["val_prec"]
+    if len(history.epoch) < epochs:
+        gr.Info("Stopped early - validation metric not improving.")
+
+    auprc = history.history["val_AUPRC"]
 
     import matplotlib.pyplot as plt
 
     fig = plt.figure()
-    plt.plot(precision)
-    plt.ylabel("Precision")
+    plt.plot(auprc)
+    plt.ylabel("Area under precision-recall curve")
     plt.xlabel("Epoch")
 
     return fig
@@ -510,7 +573,6 @@ def extract_segments(audio_dir, result_dir, output_dir, min_conf, num_seq, seq_l
 
     if progress is not None:
         progress(0, desc="Searching files ...")
-
 
     # Parse audio and result folders
     cfg.FILE_LIST = segments.parseFolders(audio_dir, result_dir)
@@ -569,7 +631,12 @@ def sample_sliders(opened=True):
     with gr.Accordion("Inference settings", open=opened):
         with gr.Row():
             confidence_slider = gr.Slider(
-                minimum=0, maximum=1, value=0.5, step=0.01, label="Minimum Confidence", info="Minimum confidence threshold."
+                minimum=0,
+                maximum=1,
+                value=0.5,
+                step=0.01,
+                label="Minimum Confidence",
+                info="Minimum confidence threshold.",
             )
             sensitivity_slider = gr.Slider(
                 minimum=0.5,
@@ -600,6 +667,41 @@ def locale():
     return gr.Dropdown(options, value="EN", label="Locale", info="Locale for the translated species common names.")
 
 
+def species_list_coordinates():
+    lat_number = gr.Slider(
+        minimum=-90, maximum=90, value=0, step=1, label="Latitude", info="Recording location latitude."
+    )
+    lon_number = gr.Slider(
+        minimum=-180, maximum=180, value=0, step=1, label="Longitude", info="Recording location longitude."
+    )
+    with gr.Row():
+        yearlong_checkbox = gr.Checkbox(True, label="Year-round")
+        week_number = gr.Slider(
+            minimum=1,
+            maximum=48,
+            value=1,
+            step=1,
+            interactive=False,
+            label="Week",
+            info="Week of the year when the recording was made. Values in [1, 48] (4 weeks per month).",
+        )
+
+        def onChange(use_yearlong):
+            return gr.Slider(interactive=(not use_yearlong))
+
+        yearlong_checkbox.change(onChange, inputs=yearlong_checkbox, outputs=week_number, show_progress=False)
+    sf_thresh_number = gr.Slider(
+        minimum=0.01,
+        maximum=0.99,
+        value=0.03,
+        step=0.01,
+        label="Location filter threshold",
+        info="Minimum species occurrence frequency threshold for location filter.",
+    )
+
+    return lat_number, lon_number, week_number, sf_thresh_number, yearlong_checkbox
+
+
 def species_lists(opened=True):
     """Creates the gradio accordion for species selection.
 
@@ -613,53 +715,22 @@ def species_lists(opened=True):
     with gr.Accordion("Species selection", open=opened):
         with gr.Row():
             species_list_radio = gr.Radio(
-                [_CUSTOM_SPECIES, _PREDICT_SPECIES, _CUSTOM_CLASSIFIER, "all species"],
-                value="all species",
+                [_CUSTOM_SPECIES, _PREDICT_SPECIES, _CUSTOM_CLASSIFIER, _ALL_SPECIES],
+                value=_ALL_SPECIES,
                 label="Species list",
                 info="List of all possible species",
                 elem_classes="d-block",
             )
 
             with gr.Column(visible=False) as position_row:
-                lat_number = gr.Slider(
-                    minimum=-90, maximum=90, value=0, step=1, label="Latitude", info="Recording location latitude."
-                )
-                lon_number = gr.Slider(
-                    minimum=-180, maximum=180, value=0, step=1, label="Longitude", info="Recording location longitude."
-                )
-                with gr.Row():
-                    yearlong_checkbox = gr.Checkbox(True, label="Year-round")
-                    week_number = gr.Slider(
-                        minimum=1,
-                        maximum=48,
-                        value=1,
-                        step=1,
-                        interactive=False,
-                        label="Week",
-                        info="Week of the year when the recording was made. Values in [1, 48] (4 weeks per month).",
-                    )
+                lat_number, lon_number, week_number, sf_thresh_number, yearlong_checkbox = species_list_coordinates()
 
-                    def onChange(use_yearlong):
-                        return gr.Slider.update(interactive=(not use_yearlong))
-
-                    yearlong_checkbox.change(onChange, inputs=yearlong_checkbox, outputs=week_number, show_progress=False)
-                sf_thresh_number = gr.Slider(
-                    minimum=0.01,
-                    maximum=0.99,
-                    value=0.03,
-                    step=0.01,
-                    label="Location filter threshold",
-                    info="Minimum species occurrence frequency threshold for location filter.",
-                )
-
-            species_file_input = gr.File(file_types=[".txt"], info="Path to species list file or folder.", visible=False)
+            species_file_input = gr.File(file_types=[".txt"], visible=False)
             empty_col = gr.Column()
 
             with gr.Column(visible=False) as custom_classifier_selector:
                 classifier_selection_button = gr.Button("Select classifier")
-                classifier_file_input = gr.Files(
-                    file_types=[".tflite"], info="Path to the custom classifier.", visible=False, interactive=False
-                )
+                classifier_file_input = gr.Files(file_types=[".tflite"], visible=False, interactive=False)
                 selected_classifier_state = gr.State()
 
                 def on_custom_classifier_selection_click():
@@ -668,7 +739,7 @@ def species_lists(opened=True):
                     if file:
                         labels = os.path.splitext(file)[0] + "_Labels.txt"
 
-                        return file, gr.File.update(value=[file, labels], visible=True)
+                        return file, gr.File(value=[file, labels], visible=True)
 
                     return None
 
@@ -700,9 +771,40 @@ def species_lists(opened=True):
 if __name__ == "__main__":
     freeze_support()
 
+    def build_header():
+
+        # Custom HTML header with gr.Markdown
+        with gr.Row():
+            gr.Markdown(
+                """
+                <div style='display: flex; align-items: center;'>
+                    <img src='data:image/png;base64,{}' style='width: 50px; height: 50px; margin-right: 10px;'>
+                    <h2>BirdNET Analyzer</h2>
+                </div>
+                """.format(
+                    utils.img2base64("gui/img/birdnet_logo.png") # There has to be another way, but this works for now; paths are weird in gradio
+                )
+            )
+
+    def build_footer():
+        with gr.Row():
+            gr.Markdown(
+                """
+                <div style='display: flex; justify-content: space-around; align-items: center; padding: 10px; text-align: center'>
+                    <div>GUI version: {}<br>Model version: {}</div>
+                    <div>K. Lisa Yang Center for Conservation Bioacoustics<br>Chemnitz University of Technology</div>
+                    <div>For docs and support visit:<br><a href='https://birdnet.cornell.edu/analyzer' target='_blank'>birdnet.cornell.edu/analyzer</a></div>
+                </div>
+                """.format(
+                    cfg.GUI_VERSION, cfg.MODEL_VERSION
+                )
+            )               
+        
+
     def build_single_analysis_tab():
         with gr.Tab("Single file"):
-            audio_input = gr.Audio(type="filepath", label="file", elem_id="single_file_audio")
+            audio_input = gr.Audio(type="filepath", label="file", sources=["upload"])
+            audio_path_state = gr.State()
 
             confidence_slider, sensitivity_slider, overlap_slider = sample_sliders(False)
             (
@@ -717,8 +819,13 @@ if __name__ == "__main__":
             ) = species_lists(False)
             locale_radio = locale()
 
+            def get_audio_path(i):
+                return i["path"] if i else None
+
+            audio_input.change(get_audio_path, inputs=audio_input, outputs=audio_path_state, preprocess=False)
+
             inputs = [
-                audio_input,
+                audio_path_state,
                 confidence_slider,
                 sensitivity_slider,
                 overlap_slider,
@@ -747,6 +854,7 @@ if __name__ == "__main__":
         with gr.Tab("Multiple files"):
             input_directory_state = gr.State()
             output_directory_predict_state = gr.State()
+
             with gr.Row():
                 with gr.Column():
                     select_directory_btn = gr.Button("Select directory (recursive)")
@@ -758,7 +866,7 @@ if __name__ == "__main__":
                         return res if res[1] else [res[0], [["No files found"]]]
 
                     select_directory_btn.click(
-                        select_directory_on_empty, outputs=[input_directory_state, directory_input], show_progress=True
+                        select_directory_on_empty, outputs=[input_directory_state, directory_input], show_progress=False
                     )
 
                 with gr.Column():
@@ -848,33 +956,171 @@ if __name__ == "__main__":
                 with gr.Column():
                     select_directory_btn = gr.Button("Classifier output")
 
-                    with gr.Row():
+                    with gr.Column():
                         classifier_name = gr.Textbox(
-                            "CustomClassifier.tflite",
+                            "CustomClassifier",
                             visible=False,
-                            info="The filename of the new classifier.",
+                            info="The name of the new classifier.",
+                        )
+                        output_format = gr.Radio(
+                            ["tflite", "raven", "both"],
+                            value="tflite",
+                            label="Model output format",
+                            info="Format for the trained classifier.",
+                            visible=False,
                         )
 
                     def select_directory_and_update_tb():
                         dir_name = _WINDOW.create_file_dialog(webview.FOLDER_DIALOG)
 
                         if dir_name:
-                            return dir_name[0], gr.Textbox.update(label=dir_name[0] + "\\", visible=True)
+                            return (
+                                dir_name[0],
+                                gr.Textbox(label=dir_name[0] + "\\", visible=True),
+                                gr.Radio(visible=True, interactive=True),
+                            )
 
                         return None, None
 
                     select_directory_btn.click(
-                        select_directory_and_update_tb, outputs=[output_directory_state, classifier_name], show_progress=False
+                        select_directory_and_update_tb,
+                        outputs=[output_directory_state, classifier_name, output_format],
+                        show_progress=False,
                     )
 
-            with gr.Row():
-                epoch_number = gr.Number(100, label="Epochs", info="Number of training epochs.")
-                batch_size_number = gr.Number(32, label="Batch size", info="Batch size.")
-                learning_rate_number = gr.Number(0.01, label="Learning rate", info="Learning rate.")
-
-            hidden_units_number = gr.Number(
-                0, label="Hidden units", info="Number of hidden units. If set to >0, a two-layer classifier is used."
+            autotune_cb = gr.Checkbox(
+                False, label="Use autotune", info="Searches best params, this will take more time."
             )
+
+            with gr.Column(visible=False) as autotune_params:
+                with gr.Row():
+                    autotune_trials = gr.Number(
+                        50, label="Trials", info="Number of training runs for hyperparameter tuning."
+                    )
+                    autotune_executions_per_trials = gr.Number(
+                        1,
+                        label="Executions per trial",
+                        info="The number of times a training run with a set of hyperparameters is repeated during hyperparameter tuning (this reduces the variance).",
+                    )
+
+            with gr.Column() as custom_params:
+                with gr.Row():
+                    epoch_number = gr.Number(100, label="Epochs", info="Number of training epochs.")
+                    batch_size_number = gr.Number(32, label="Batch size", info="Batch size.")
+                    learning_rate_number = gr.Number(0.01, label="Learning rate", info="Learning rate.")
+
+                with gr.Row():
+                    upsampling_mode = gr.Radio(
+                        ["repeat", "mean", "smote"],
+                        value="repeat",
+                        label="Upsampling mode",
+                        info="Balance data through upsampling.",
+                    )
+                    upsampling_ratio = gr.Slider(
+                        0.0,
+                        1.0,
+                        0.0,
+                        step=0.01,
+                        label="Upsampling ratio",
+                        info="Balance train data and upsample minority classes.",
+                    )
+
+                with gr.Row():
+                    hidden_units_number = gr.Number(
+                        0,
+                        label="Hidden units",
+                        info="Number of hidden units. If set to >0, a two-layer classifier is used.",
+                    )
+                    use_mixup = gr.Checkbox(
+                        False, label="Use mixup", info="Whether to use mixup for training.", show_label=True
+                    )
+
+            def on_autotune_change(value):
+                return gr.Column(visible=not value), gr.Column(visible=value)
+
+            autotune_cb.change(
+                on_autotune_change, inputs=autotune_cb, outputs=[custom_params, autotune_params], show_progress=False
+            )
+
+            with gr.Row():
+                crop_mode = gr.Radio(
+                    ["center", "first", "segments"],
+                    value="center",
+                    label="Crop mode",
+                    info="Crop mode for training data.",
+                )
+                crop_overlap = gr.Number(
+                    0.0, label="Crop overlap", info="Overlap of training data segments", visible=False
+                )
+
+                def on_crop_select(new_crop_mode):
+                    return gr.Number(visible=new_crop_mode == "segments", interactive=new_crop_mode == "segments")
+
+                crop_mode.change(on_crop_select, inputs=crop_mode, outputs=crop_overlap)
+
+            model_save_mode = gr.Radio(
+                ["replace", "append"],
+                value="replace",
+                label="Model save mode",
+                info="'replace' will overwrite the original classification layer and 'append' will combine the original classification layer with the new one.",
+            )
+
+            with gr.Row():
+                cache_file_state = gr.State()
+                cache_mode = gr.Radio(
+                    ["none", "load", "save"], value="none", label="Cache mode", info="Cache mode for training files."
+                )
+                with gr.Column(visible=False) as new_cache_file_row:
+                    select_cache_file_directory_btn = gr.Button("Cache file directory")
+
+                    with gr.Column():
+                        cache_file_name = gr.Textbox(
+                            "train_cache.npz",
+                            visible=False,
+                            info="The name of the cache_file.",
+                        )
+
+                    def select_directory_and_update():
+                        dir_name = _WINDOW.create_file_dialog(webview.FOLDER_DIALOG)
+
+                        if dir_name:
+                            return (
+                                dir_name[0],
+                                gr.Textbox(label=dir_name[0] + "\\", visible=True),
+                            )
+
+                        return None, None
+
+                    select_cache_file_directory_btn.click(
+                        select_directory_and_update,
+                        outputs=[cache_file_state, cache_file_name],
+                        show_progress=False,
+                    )
+
+                with gr.Column(visible=False) as load_cache_file_row:
+                    selected_cache_file_btn = gr.Button("Select cache file")
+                    cache_file_input = gr.File(file_types=[".npz"], visible=False, interactive=False)
+
+                    def on_cache_file_selection_click():
+                        file = select_file(("NPZ file (*.npz)",))
+
+                        if file:
+                            return file, gr.File(value=file, visible=True)
+
+                        return None, None
+
+                    selected_cache_file_btn.click(
+                        on_cache_file_selection_click,
+                        outputs=[cache_file_state, cache_file_input],
+                        show_progress=False,
+                    )
+
+                def on_cache_mode_change(value):
+                    return gr.Row(visible=value == "save"), gr.Row(visible=value == "load")
+
+                cache_mode.change(
+                    on_cache_mode_change, inputs=cache_mode, outputs=[new_cache_file_row, load_cache_file_row]
+                )
 
             train_history_plot = gr.Plot()
 
@@ -884,12 +1130,25 @@ if __name__ == "__main__":
                 start_training,
                 inputs=[
                     input_directory_state,
+                    crop_mode,
+                    crop_overlap,
                     output_directory_state,
                     classifier_name,
+                    model_save_mode,
+                    cache_mode,
+                    cache_file_state,
+                    cache_file_name,
+                    autotune_cb,
+                    autotune_trials,
+                    autotune_executions_per_trials,
                     epoch_number,
                     batch_size_number,
                     learning_rate_number,
                     hidden_units_number,
+                    use_mixup,
+                    upsampling_ratio,
+                    upsampling_mode,
+                    output_format,
                 ],
                 outputs=[train_history_plot],
             )
@@ -961,15 +1220,70 @@ if __name__ == "__main__":
                 outputs=result_grid,
             )
 
+    def build_species_tab():
+        with gr.Tab("Species"):
+            output_directory_state = gr.State()
+            select_directory_btn = gr.Button("Output directory")
+
+            classifier_name = gr.Textbox(
+                "species_list.txt",
+                visible=False,
+                info="Name of the file, if not specified 'species_list.txt' will be used.",
+            )
+
+            def select_directory_and_update_tb():
+                dir_name = _WINDOW.create_file_dialog(webview.FOLDER_DIALOG)
+
+                if dir_name:
+                    return (
+                        dir_name[0],
+                        gr.Textbox(label=dir_name[0] + "\\", visible=True),
+                    )
+
+                return None, None
+
+            select_directory_btn.click(
+                select_directory_and_update_tb,
+                outputs=[output_directory_state, classifier_name],
+                show_progress=False,
+            )
+
+            lat_number, lon_number, week_number, sf_thresh_number, yearlong_checkbox = species_list_coordinates()
+
+            sortby = gr.Radio(
+                ["freq", "alpha"],
+                value="freq",
+                label="Sort by",
+                info="Sort species by occurrence frequency or alphabetically.",
+            )
+
+            start_btn = gr.Button("Generate species list")
+            start_btn.click(
+                run_species_list,
+                inputs=[
+                    output_directory_state,
+                    classifier_name,
+                    lat_number,
+                    lon_number,
+                    week_number,
+                    yearlong_checkbox,
+                    sf_thresh_number,
+                    sortby,
+                ],
+            )
+
     with gr.Blocks(
         css=r".d-block .wrap {display: block !important;} .mh-200 {max-height: 300px; overflow-y: auto !important;} footer {display: none !important;} #single_file_audio, #single_file_audio * {max-height: 81.6px; min-height: 0;}",
         theme=gr.themes.Default(),
         analytics_enabled=False,
     ) as demo:
+        build_header()
         build_single_analysis_tab()
         build_multi_analysis_tab()
         build_train_tab()
         build_segments_tab()
+        build_species_tab()
+        build_footer()
 
     url = demo.queue(api_open=False).launch(prevent_thread_lock=True, quiet=True)[1]
     _WINDOW = webview.create_window("BirdNET-Analyzer", url.rstrip("/") + "?__theme=light", min_size=(1024, 768))

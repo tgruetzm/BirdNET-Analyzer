@@ -34,6 +34,17 @@ def getAudioFileLength(path, sample_rate=48000):
     import librosa
 
     return librosa.get_duration(filename=path, sr=sample_rate)
+def getAudioFileLength(path, sample_rate=48000):    
+    
+    # Open file with librosa (uses ffmpeg or libav)
+    import librosa
+
+    return librosa.get_duration(filename=path, sr=sample_rate)
+
+def get_sample_rate(path: str):
+    import librosa
+    return librosa.get_samplerate(path)
+
 
 def saveSignal(sig, fname: str):
     """Saves a signal to file.
@@ -92,7 +103,7 @@ def splitSignal(sig, rate, seconds, overlap, minlen):
         split = sig[i : i + int(seconds * rate)]
 
         # End of signal?
-        if len(split) < int(minlen * rate):
+        if len(split) < int(minlen * rate) and len(sig_splits) > 0:
             break
 
         # Signal chunk too short?
