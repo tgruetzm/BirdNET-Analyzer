@@ -36,7 +36,7 @@ def processLocation(directory):
 
         print("results: " + directory + species[0])
         print("segments for: " + outputDirectory)
-        subprocess.call(['python',segmentsScript,"--min_conf",".1","--threads","1","--padding","3.0", "--slist",species[1],"--results",directory + species[0],"--audio", directory, "--o", outputDirectory])
+        subprocess.call(['python',segmentsScript,"--min_conf",".1","--threads","1","--padding","10.0", "--slist",species[1],"--results",directory + species[0],"--audio", directory, "--o", outputDirectory])
 
 
 
