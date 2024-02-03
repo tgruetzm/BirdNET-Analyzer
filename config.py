@@ -16,7 +16,7 @@ MODEL_VERSION: str = 'V2.4'
 PB_MODEL: str = 'checkpoints/V2.4/BirdNET_GLOBAL_6K_V2.4_Model'
 # MODEL_PATH = PB_MODEL # This will load the protobuf model
 MODEL_PATH: str = 'checkpoints/V2.4/BirdNET_GLOBAL_6K_V2.4_Model_FP32.tflite'
-MDATA_MODEL_PATH: str = 'checkpoints/V2.4/BirdNET_GLOBAL_6K_V2.4_MData_Model_FP16.tflite'
+MDATA_MODEL_PATH: str = 'checkpoints/V2.4/BirdNET_GLOBAL_6K_V2.4_MData_Model_V2_FP16.tflite'
 LABELS_FILE: str = 'checkpoints/V2.4/BirdNET_GLOBAL_6K_V2.4_Labels.txt'
 TRANSLATED_LABELS_PATH:str = 'labels/V2.4'
 
@@ -166,8 +166,13 @@ AUTOTUNE_TRIALS: int = 50
 # Mutliple executions will be averaged, so the evaluation is more consistent
 AUTOTUNE_EXECUTIONS_PER_TRIAL: int = 1
 
-# If a binary classification model is trained, this value will be detected automatically in the training script
+# If a binary classification model is trained.
+# This value will be detected automatically in the training script, if only one class and a non-event class is used.
 BINARY_CLASSIFICATION: bool = False
+
+# If a model for a multi-label setting is trained.
+# This value will automatically be set, if subfolders in the input direcotry are named with multiple classes separated by commas.
+MULTI_LABEL: bool = False
 
 #####################
 # Misc runtime vars #

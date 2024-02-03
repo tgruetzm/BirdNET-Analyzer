@@ -396,7 +396,14 @@ def select_subdirectories():
     if dir_name:
         subdirs = utils.list_subdirectories(dir_name[0])
 
-        return dir_name[0], [[d] for d in subdirs]
+        labels = []
+        for folder in subdirs:
+            labels_in_folder = folder.split(',')
+            for label in labels_in_folder:
+                if not label in labels and not label.startswith('-') and not label in cfg.NON_EVENT_CLASSES:
+                    labels.append(label)
+
+        return dir_name[0], [[label] for label in sorted(labels)]
 
     return None, None
 
@@ -551,12 +558,14 @@ def start_training(
         gr.Info("Stopped early - validation metric not improving.")
 
     auprc = history.history["val_AUPRC"]
+    auroc = history.history["val_AUROC"]
 
     import matplotlib.pyplot as plt
 
     fig = plt.figure()
-    plt.plot(auprc)
-    plt.ylabel("Area under precision-recall curve")
+    plt.plot(auprc, label="AUPRC")
+    plt.plot(auroc, label="AUROC")
+    plt.legend()
     plt.xlabel("Epoch")
 
     return fig
