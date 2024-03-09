@@ -8,12 +8,12 @@ import torchaudio.transforms as T
 
 
 # Variables
-samplingRate = 12000 #12k audio, but actual is a bit slower 
+#samplingRate = 12000 #12k audio, but actual is a bit slower 
 
-inputPath = "D:\\Audio Import\\QA Audio\\*.pcm"
+#inputPath = "D:\\Audio Import\\QA Audio\\*.pcm"
 #inputPath  = "D:\\24k PCM audio\\*.pcm" 
 #outputPath = "E:\\BirdNet-Audio\\"
-outputPath = "E:\\BirdNet-Audio\\QA Audio\\"
+#outputPath = "E:\\BirdNet-Audio\\QA Audio\\"
 
 
 #def writeOutputFile(outputFile, data, samplerate):
@@ -22,11 +22,11 @@ outputPath = "E:\\BirdNet-Audio\\QA Audio\\"
 if __name__ == '__main__':
 
 # load data
-    inputFile = "E:\\BirdNet-Audio\\Control Tests\\OS-im69-FROG_1-9-23_12-38-19.flac"
-    outputFile = inputFile.replace(".flac","resamp.flac")
+    inputFile = "C:\\Users\\Troy\\Downloads\\BM-18-466f9_24000.flac"
+    outputFile = inputFile.replace(".flac","resamp.3.flac")
     data, rate = sf.read(inputFile)
     waveform, sample_rate = torchaudio.load(inputFile)
-    resampler = T.Resample(rate, 48000, dtype=waveform.dtype, lowpass_filter_width=64,rolloff=0.125,resampling_method="kaiser_window",beta=14.769656459379492)
+    resampler = T.Resample(24000, 48000, dtype=waveform.dtype, lowpass_filter_width=64,rolloff=0.3,resampling_method="kaiser_window")
     sig = resampler(waveform).numpy()[0]
 
     sf.write(outputFile,sig, 48000)

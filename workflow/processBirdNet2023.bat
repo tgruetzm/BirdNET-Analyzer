@@ -1,1 +1,1 @@
-python ../analyzeGPU.py --threads 9 --batchsize 2000 --overlap 0 --slist "E:\BirdNet Audio 2023\species_list.txt"  --rtype audacity --sensitivity 1.5 --min_conf .1 --i "E:\BirdNet Audio 2023\Audio" --o "E:\BirdNet Audio 2023\Audio" 
+python ../analyzeGPU.py --threads 9 --batchsize 2000 --overlap 0 --slist "D:\NAS\ORI Audio\2024\species_list.txt"  --rtype audacity --sensitivity 1.5 --min_conf .1 --i "D:\NAS\ORI Audio\2024\Audio" --o "D:\NAS\ORI Audio\2024\Audio\1ResultsCombined" 

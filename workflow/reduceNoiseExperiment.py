@@ -11,9 +11,9 @@ import os
 # Variables
 samplingRate = 12000 #12k audio, but actual is a bit slower 
 #
-inputPath = "E:\\BirdNet Audio 2023\\Audio\\Missions\\OS-27-2FC_2023-04-02_T19-06-11.flac"
+inputPath = "D:\\NAS\\ORI Audio\\2024\\Audio\\All\\BM-1short-f0a69_2024-01-30_T17-36-03.flac"
 #inputPath = "D:\\BirdNet Audio 2023\\*.flac"
-outputPath = "E:\\BirdNet Audio 2023\\Audio\\Missions\\"
+outputPath = "D:\\NAS\\ORI Audio\\2024\\Audio\\All\\"
 
 
 #inputPath = "C:\\Users\\Troy\\OneDrive\\GGOW Audio 2023\\*.mp3"
@@ -30,7 +30,7 @@ def processFile(file,p):
     start_time = datetime.now()
     fileParts = file.split("\\")
     fileName = fileParts[len(fileParts)-1]
-    outputFile = outputPath + fileName.replace("2FC", str(p) + "2FCNR")
+    outputFile = outputPath + fileName.replace("1short",str(p) + "-1short")
     #if os.path.exists(outputFile):
     #    return
     data, rate = sf.read(file)

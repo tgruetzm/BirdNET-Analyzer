@@ -366,8 +366,8 @@ if __name__ == '__main__':
         outFile = outpath + "\\" + key + ".flac"
         if not os.path.exists(outFile):# only write file if it doesn't exist
             outputAudioArray = np.hstack(segmentOutputList)
-            #reduced_noise = nr.reduce_noise(y=outputAudioArray, sr=int(fileRate), prop_decrease=.5) #.5 sounds good without reducing the signal too much
-            audio.saveSignal(outputAudioArray, outFile,int(fileRate))
+            reduced_noise = nr.reduce_noise(y=outputAudioArray, sr=int(fileRate), prop_decrease=.5) #.5 sounds good without reducing the signal too much
+            audio.saveSignal(reduced_noise, outFile,int(fileRate))
             out_string = ''
             for s in segmentOutputResults:
                 out_string += s

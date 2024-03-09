@@ -49,6 +49,7 @@ if __name__ == '__main__':
     #location = sys.argv[1]
     #inputPath = inputPath + "\\" + location
     inputPath = sys.argv[1]
+    outputPathBase = sys.argv[2]
 
     if not glob.glob(inputPath):
         print("result files not found:" + inputPath)
@@ -64,12 +65,12 @@ if __name__ == '__main__':
                     processLine(line)
             #process results
             for key in results:
-                outputPath = inputPath + key
+                outputPath = outputPathBase + key
                 if not os.path.exists(outputPath):
                     os.makedirs(outputPath, exist_ok=True)
                     print("creating: " + outputPath)
 
-                outputFile = inputPath + key + "\\" + fileName
+                outputFile = outputPathBase + key + "\\" + fileName
                 if not os.path.exists(outputFile):
                     with open(outputFile, 'w') as outputResults:
                         print("writing: " + outputFile)

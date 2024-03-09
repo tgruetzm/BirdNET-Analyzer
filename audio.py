@@ -24,14 +24,9 @@ def openAudioFile(path, sample_rate=48000, offset=0.0, duration=None):
         #sig, rate = librosa.load(path, sr=sample_rate, offset=offset, duration=duration, mono=True, res_type='kaiser_fast')#kaiser_best,'kaiser_fast'
         waveform, sample_rate = torchaudio.load(path, frame_offset=offset*fileSampleRate, num_frames=duration*fileSampleRate)
         reduced_noise = nr.reduce_noise(y=waveform.numpy(), sr=fileSampleRate, prop_decrease=.95) # .95 seems to increase positives quite a bit, might be ideal.  Does require filtering by .2 min_conf to get false positives under control
-        #defaultRolloff= 0.9475937167399596
-        #.6 seems to be around 3700hz
-        #.5 filters at 3000, seems to greatly increase detectability
-        #.3 might be ideal for GGOW filtering, very low FP and good detectability
-        #.15 is 900hz
-        #.125 might work well to filter frogs from the audio
-        #.25 worked slightly better than .3, trying .225
-        resampler = T.Resample(fileSampleRate, 48000, dtype=waveform.dtype, lowpass_filter_width=64,rolloff=0.3,resampling_method="kaiser_window",beta=14.769656459379492)
+        #.8 rolloff filters to 10k
+        #.2 rolloff filters to 2400hz
+        resampler = T.Resample(fileSampleRate, 48000, dtype=waveform.dtype, lowpass_filter_width=64,rolloff=0.2,resampling_method="kaiser_window")
         sig = resampler(torch.from_numpy(reduced_noise)).numpy()[0]
         #sig = resampler(waveform).numpy()[0]
         rate = 48000

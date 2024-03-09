@@ -37,7 +37,7 @@ def parseInputFiles(path, allowed_filetypes=['wav', 'flac', 'mp3', 'ogg', 'm4a']
         #print(root)
         for f in flist:
             if len(f.rsplit('.', 1)) > 1 and f.rsplit('.', 1)[1].lower() in allowed_filetypes:
-                if os.path.isfile(os.path.join(root, f.replace(".flac",".BirdNET.results.txt"))):
+                if os.path.isfile(os.path.join(cfg.OUTPUT_PATH, f.replace(".flac",".BirdNET.results.txt"))):
                     continue
                 files.append(os.path.join(root, f))
 

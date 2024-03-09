@@ -4730,3 +4730,1028 @@ Traceback (most recent call last):
     raise IOError(
 OSError: No file or directory found at C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer\checkpoints/V2.3/BirdNET_GLOBAL_3K_V2.3_Model
 
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-02-02_T17-40-02.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 314, in analyzeFile
+    p_labels = dict(zip(cfg.LABELS, pred))
+KeyboardInterrupt
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-01-31_T17-37-02.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 234, in predict
+    prediction = model.flat_sigmoid(np.array(prediction), sensitivity=-cfg.SIGMOID_SENSITIVITY)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 136, in flat_sigmoid
+    return 1 / (1.0 + np.exp(sensitivity * np.clip(x, -15, 15)))
+  File "<__array_function__ internals>", line 180, in clip
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\numpy\core\fromnumeric.py", line 2154, in clip
+    return _wrapfunc(a, 'clip', a_min, a_max, out=out, **kwargs)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\numpy\core\fromnumeric.py", line 57, in _wrapfunc
+    return bound(*args, **kwds)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\numpy\core\_methods.py", line 160, in _clip
+    return _clip_dep_invoke_with_casting(
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\numpy\core\_methods.py", line 114, in _clip_dep_invoke_with_casting
+    return ufunc(*args, out=out, **kwargs)
+KeyboardInterrupt
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-02-01_T17-39-03.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 149, in predict
+    INTERPRETER.resize_tensor_input(INPUT_LAYER_INDEX, [len(sample), *sample[0].shape])
+IndexError: index 0 is out of bounds for axis 0 with size 0
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-01-30_T17-36-03.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 149, in predict
+    INTERPRETER.resize_tensor_input(INPUT_LAYER_INDEX, [len(sample), *sample[0].shape])
+IndexError: index 0 is out of bounds for axis 0 with size 0
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-02-02_T17-40-02.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 162, in predict
+    prediction = PBMODEL(sample)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\utils\traceback_utils.py", line 70, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\function_deserialization.py", line 295, in restored_function_body
+    raise ValueError(
+ValueError: Exception encountered when calling layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer).
+
+Could not find matching concrete function to call loaded from the SavedModel. Got:
+  Positional arguments (2 total):
+    * <tf.Tensor 'inputs:0' shape=(0,) dtype=float32>
+    * False
+  Keyword arguments: {}
+
+ Expected these arguments to match one of the following 2 option(s):
+
+Option 1:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * False
+  Keyword arguments: {}
+
+Option 2:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * True
+  Keyword arguments: {}
+
+Call arguments received by layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer):
+  • args=('tf.Tensor(shape=(0,), dtype=float32)',)
+  • kwargs={'training': 'False'}
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-01-30_T17-36-03.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 162, in predict
+    prediction = PBMODEL(sample)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\utils\traceback_utils.py", line 70, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\function_deserialization.py", line 295, in restored_function_body
+    raise ValueError(
+ValueError: Exception encountered when calling layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer).
+
+Could not find matching concrete function to call loaded from the SavedModel. Got:
+  Positional arguments (2 total):
+    * <tf.Tensor 'inputs:0' shape=(0,) dtype=float32>
+    * False
+  Keyword arguments: {}
+
+ Expected these arguments to match one of the following 2 option(s):
+
+Option 1:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * False
+  Keyword arguments: {}
+
+Option 2:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * True
+  Keyword arguments: {}
+
+Call arguments received by layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer):
+  • args=('tf.Tensor(shape=(0,), dtype=float32)',)
+  • kwargs={'training': 'False'}
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-02-01_T17-39-03.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 162, in predict
+    prediction = PBMODEL(sample)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\utils\traceback_utils.py", line 70, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\function_deserialization.py", line 295, in restored_function_body
+    raise ValueError(
+ValueError: Exception encountered when calling layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer).
+
+Could not find matching concrete function to call loaded from the SavedModel. Got:
+  Positional arguments (2 total):
+    * <tf.Tensor 'inputs:0' shape=(0,) dtype=float32>
+    * False
+  Keyword arguments: {}
+
+ Expected these arguments to match one of the following 2 option(s):
+
+Option 1:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * False
+  Keyword arguments: {}
+
+Option 2:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * True
+  Keyword arguments: {}
+
+Call arguments received by layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer):
+  • args=('tf.Tensor(shape=(0,), dtype=float32)',)
+  • kwargs={'training': 'False'}
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-01-31_T17-37-02.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 162, in predict
+    prediction = PBMODEL(sample)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\utils\traceback_utils.py", line 70, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\function_deserialization.py", line 295, in restored_function_body
+    raise ValueError(
+ValueError: Exception encountered when calling layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer).
+
+Could not find matching concrete function to call loaded from the SavedModel. Got:
+  Positional arguments (2 total):
+    * <tf.Tensor 'inputs:0' shape=(0,) dtype=float32>
+    * False
+  Keyword arguments: {}
+
+ Expected these arguments to match one of the following 2 option(s):
+
+Option 1:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * False
+  Keyword arguments: {}
+
+Option 2:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * True
+  Keyword arguments: {}
+
+Call arguments received by layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer):
+  • args=('tf.Tensor(shape=(0,), dtype=float32)',)
+  • kwargs={'training': 'False'}
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-02-01_T17-39-03.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 144, in predict
+    loadModel()
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 75, in loadModel
+    logical_gpus = tf.config.list_logical_devices('GPU')
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\config.py", line 459, in list_logical_devices
+    return context.context().list_logical_devices(device_type=device_type)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\eager\context.py", line 1579, in list_logical_devices
+    self.ensure_initialized()
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\eager\context.py", line 622, in ensure_initialized
+    context_handle = pywrap_tfe.TFE_NewContext(opts)
+KeyboardInterrupt
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-01-31_T17-37-02.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\eager\context.py", line 622, in ensure_initialized
+    context_handle = pywrap_tfe.TFE_NewContext(opts)
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 144, in predict
+    loadModel()
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 75, in loadModel
+    logical_gpus = tf.config.list_logical_devices('GPU')
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\config.py", line 459, in list_logical_devices
+    return context.context().list_logical_devices(device_type=device_type)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\eager\context.py", line 1579, in list_logical_devices
+    self.ensure_initialized()
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\eager\context.py", line 622, in ensure_initialized
+    context_handle = pywrap_tfe.TFE_NewContext(opts)
+KeyboardInterrupt
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-02-02_T17-40-02.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 144, in predict
+    loadModel()
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 75, in loadModel
+    logical_gpus = tf.config.list_logical_devices('GPU')
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\config.py", line 459, in list_logical_devices
+    return context.context().list_logical_devices(device_type=device_type)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\eager\context.py", line 1579, in list_logical_devices
+    self.ensure_initialized()
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\eager\context.py", line 622, in ensure_initialized
+    context_handle = pywrap_tfe.TFE_NewContext(opts)
+KeyboardInterrupt
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-01-31_T17-37-02.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 162, in predict
+    prediction = PBMODEL(sample)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\utils\traceback_utils.py", line 70, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\function_deserialization.py", line 295, in restored_function_body
+    raise ValueError(
+ValueError: Exception encountered when calling layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer).
+
+Could not find matching concrete function to call loaded from the SavedModel. Got:
+  Positional arguments (2 total):
+    * <tf.Tensor 'inputs:0' shape=(0,) dtype=float32>
+    * False
+  Keyword arguments: {}
+
+ Expected these arguments to match one of the following 2 option(s):
+
+Option 1:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * False
+  Keyword arguments: {}
+
+Option 2:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * True
+  Keyword arguments: {}
+
+Call arguments received by layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer):
+  • args=('tf.Tensor(shape=(0,), dtype=float32)',)
+  • kwargs={'training': 'False'}
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-02-02_T17-40-02.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 162, in predict
+    prediction = PBMODEL(sample)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\utils\traceback_utils.py", line 70, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\function_deserialization.py", line 295, in restored_function_body
+    raise ValueError(
+ValueError: Exception encountered when calling layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer).
+
+Could not find matching concrete function to call loaded from the SavedModel. Got:
+  Positional arguments (2 total):
+    * <tf.Tensor 'inputs:0' shape=(0,) dtype=float32>
+    * False
+  Keyword arguments: {}
+
+ Expected these arguments to match one of the following 2 option(s):
+
+Option 1:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * False
+  Keyword arguments: {}
+
+Option 2:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * True
+  Keyword arguments: {}
+
+Call arguments received by layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer):
+  • args=('tf.Tensor(shape=(0,), dtype=float32)',)
+  • kwargs={'training': 'False'}
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-02-01_T17-39-03.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 162, in predict
+    prediction = PBMODEL(sample)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\utils\traceback_utils.py", line 70, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\function_deserialization.py", line 295, in restored_function_body
+    raise ValueError(
+ValueError: Exception encountered when calling layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer).
+
+Could not find matching concrete function to call loaded from the SavedModel. Got:
+  Positional arguments (2 total):
+    * <tf.Tensor 'inputs:0' shape=(0,) dtype=float32>
+    * False
+  Keyword arguments: {}
+
+ Expected these arguments to match one of the following 2 option(s):
+
+Option 1:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * False
+  Keyword arguments: {}
+
+Option 2:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * True
+  Keyword arguments: {}
+
+Call arguments received by layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer):
+  • args=('tf.Tensor(shape=(0,), dtype=float32)',)
+  • kwargs={'training': 'False'}
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-01-30_T17-36-03.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 162, in predict
+    prediction = PBMODEL(sample)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\utils\traceback_utils.py", line 70, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\function_deserialization.py", line 295, in restored_function_body
+    raise ValueError(
+ValueError: Exception encountered when calling layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer).
+
+Could not find matching concrete function to call loaded from the SavedModel. Got:
+  Positional arguments (2 total):
+    * <tf.Tensor 'inputs:0' shape=(0,) dtype=float32>
+    * False
+  Keyword arguments: {}
+
+ Expected these arguments to match one of the following 2 option(s):
+
+Option 1:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * False
+  Keyword arguments: {}
+
+Option 2:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * True
+  Keyword arguments: {}
+
+Call arguments received by layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer):
+  • args=('tf.Tensor(shape=(0,), dtype=float32)',)
+  • kwargs={'training': 'False'}
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-01-30_T17-36-03.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 162, in predict
+    prediction = PBMODEL(sample)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\utils\traceback_utils.py", line 70, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\function_deserialization.py", line 295, in restored_function_body
+    raise ValueError(
+ValueError: Exception encountered when calling layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer).
+
+Could not find matching concrete function to call loaded from the SavedModel. Got:
+  Positional arguments (2 total):
+    * <tf.Tensor 'inputs:0' shape=(0,) dtype=float32>
+    * False
+  Keyword arguments: {}
+
+ Expected these arguments to match one of the following 2 option(s):
+
+Option 1:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * False
+  Keyword arguments: {}
+
+Option 2:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * True
+  Keyword arguments: {}
+
+Call arguments received by layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer):
+  • args=('tf.Tensor(shape=(0,), dtype=float32)',)
+  • kwargs={'training': 'False'}
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-01-31_T17-37-02.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 162, in predict
+    prediction = PBMODEL(sample)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\utils\traceback_utils.py", line 70, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\function_deserialization.py", line 295, in restored_function_body
+    raise ValueError(
+ValueError: Exception encountered when calling layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer).
+
+Could not find matching concrete function to call loaded from the SavedModel. Got:
+  Positional arguments (2 total):
+    * <tf.Tensor 'inputs:0' shape=(0,) dtype=float32>
+    * False
+  Keyword arguments: {}
+
+ Expected these arguments to match one of the following 2 option(s):
+
+Option 1:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * False
+  Keyword arguments: {}
+
+Option 2:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * True
+  Keyword arguments: {}
+
+Call arguments received by layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer):
+  • args=('tf.Tensor(shape=(0,), dtype=float32)',)
+  • kwargs={'training': 'False'}
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-02-01_T17-39-03.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 162, in predict
+    prediction = PBMODEL(sample)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\utils\traceback_utils.py", line 70, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\function_deserialization.py", line 295, in restored_function_body
+    raise ValueError(
+ValueError: Exception encountered when calling layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer).
+
+Could not find matching concrete function to call loaded from the SavedModel. Got:
+  Positional arguments (2 total):
+    * <tf.Tensor 'inputs:0' shape=(0,) dtype=float32>
+    * False
+  Keyword arguments: {}
+
+ Expected these arguments to match one of the following 2 option(s):
+
+Option 1:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * False
+  Keyword arguments: {}
+
+Option 2:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * True
+  Keyword arguments: {}
+
+Call arguments received by layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer):
+  • args=('tf.Tensor(shape=(0,), dtype=float32)',)
+  • kwargs={'training': 'False'}
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-02-02_T17-40-02.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 162, in predict
+    prediction = PBMODEL(sample)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\utils\traceback_utils.py", line 70, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\function_deserialization.py", line 295, in restored_function_body
+    raise ValueError(
+ValueError: Exception encountered when calling layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer).
+
+Could not find matching concrete function to call loaded from the SavedModel. Got:
+  Positional arguments (2 total):
+    * <tf.Tensor 'inputs:0' shape=(0,) dtype=float32>
+    * False
+  Keyword arguments: {}
+
+ Expected these arguments to match one of the following 2 option(s):
+
+Option 1:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * False
+  Keyword arguments: {}
+
+Option 2:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * True
+  Keyword arguments: {}
+
+Call arguments received by layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer):
+  • args=('tf.Tensor(shape=(0,), dtype=float32)',)
+  • kwargs={'training': 'False'}
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-02-01_T17-39-03.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\ops.py", line 2693, in get_attr
+    pywrap_tf_session.TF_OperationGetAttrValueProto(self._c_op, name, buf)
+tensorflow.python.framework.errors_impl.InvalidArgumentError: Operation 'block_1_2_conv_3_conv2d_readvariableop_resource' has no attr named '_class'.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 144, in predict
+    loadModel()
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 81, in loadModel
+    PBMODEL = keras.models.load_model(cfg.MODEL_PATH, compile=False)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\utils\traceback_utils.py", line 65, in error_handler
+    return fn(*args, **kwargs)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\saving\save.py", line 231, in load_model
+    return saved_model_load.load(
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\saving\saved_model\load.py", line 141, in load
+    loaded = tf.__internal__.saved_model.load_partial(
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\load.py", line 930, in load_partial
+    loader = Loader(object_graph_proto, saved_model_proto, export_dir,
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\load.py", line 154, in __init__
+    function_deserialization.load_function_def_library(
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\function_deserialization.py", line 416, in load_function_def_library
+    func_graph = function_def_lib.function_def_to_graph(
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\function_def_to_graph.py", line 87, in function_def_to_graph
+    importer.import_graph_def_for_function(graph_def, name="")
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\importer.py", line 414, in import_graph_def_for_function
+    return _import_graph_def_internal(
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\importer.py", line 517, in _import_graph_def_internal
+    _ProcessNewOps(graph)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\importer.py", line 250, in _ProcessNewOps
+    colocation_names = _GetColocationNames(new_op)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\importer.py", line 297, in _GetColocationNames
+    class_values = op.get_attr('_class')
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\ops.py", line 2693, in get_attr
+    pywrap_tf_session.TF_OperationGetAttrValueProto(self._c_op, name, buf)
+KeyboardInterrupt
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-02-02_T17-40-02.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 144, in predict
+    loadModel()
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 81, in loadModel
+    PBMODEL = keras.models.load_model(cfg.MODEL_PATH, compile=False)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\utils\traceback_utils.py", line 65, in error_handler
+    return fn(*args, **kwargs)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\saving\save.py", line 231, in load_model
+    return saved_model_load.load(
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\saving\saved_model\load.py", line 141, in load
+    loaded = tf.__internal__.saved_model.load_partial(
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\load.py", line 930, in load_partial
+    loader = Loader(object_graph_proto, saved_model_proto, export_dir,
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\load.py", line 154, in __init__
+    function_deserialization.load_function_def_library(
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\function_deserialization.py", line 416, in load_function_def_library
+    func_graph = function_def_lib.function_def_to_graph(
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\function_def_to_graph.py", line 87, in function_def_to_graph
+    importer.import_graph_def_for_function(graph_def, name="")
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\importer.py", line 414, in import_graph_def_for_function
+    return _import_graph_def_internal(
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\importer.py", line 517, in _import_graph_def_internal
+    _ProcessNewOps(graph)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\importer.py", line 248, in _ProcessNewOps
+    original_device = new_op.device
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\ops.py", line 2256, in device
+    @property
+KeyboardInterrupt
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-01-31_T17-37-02.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 144, in predict
+    loadModel()
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 81, in loadModel
+    PBMODEL = keras.models.load_model(cfg.MODEL_PATH, compile=False)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\utils\traceback_utils.py", line 65, in error_handler
+    return fn(*args, **kwargs)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\saving\save.py", line 231, in load_model
+    return saved_model_load.load(
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\saving\saved_model\load.py", line 141, in load
+    loaded = tf.__internal__.saved_model.load_partial(
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\load.py", line 930, in load_partial
+    loader = Loader(object_graph_proto, saved_model_proto, export_dir,
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\load.py", line 154, in __init__
+    function_deserialization.load_function_def_library(
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\function_deserialization.py", line 416, in load_function_def_library
+    func_graph = function_def_lib.function_def_to_graph(
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\function_def_to_graph.py", line 87, in function_def_to_graph
+    importer.import_graph_def_for_function(graph_def, name="")
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\importer.py", line 414, in import_graph_def_for_function
+    return _import_graph_def_internal(
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\importer.py", line 517, in _import_graph_def_internal
+    _ProcessNewOps(graph)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\importer.py", line 247, in _ProcessNewOps
+    for new_op in graph._add_new_tf_operations(compute_devices=False):  # pylint: disable=protected-access
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\ops.py", line 3950, in _add_new_tf_operations
+    new_ops = [
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\ops.py", line 3951, in <listcomp>
+    self._create_op_from_tf_operation(c_op, compute_device=compute_devices)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\ops.py", line 3812, in _create_op_from_tf_operation
+    def _create_op_from_tf_operation(self, c_op, compute_device=True):
+KeyboardInterrupt
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-01-30_T17-36-03.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 144, in predict
+    loadModel()
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 81, in loadModel
+    PBMODEL = keras.models.load_model(cfg.MODEL_PATH, compile=False)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\utils\traceback_utils.py", line 65, in error_handler
+    return fn(*args, **kwargs)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\saving\save.py", line 231, in load_model
+    return saved_model_load.load(
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\saving\saved_model\load.py", line 141, in load
+    loaded = tf.__internal__.saved_model.load_partial(
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\load.py", line 930, in load_partial
+    loader = Loader(object_graph_proto, saved_model_proto, export_dir,
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\load.py", line 154, in __init__
+    function_deserialization.load_function_def_library(
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\function_deserialization.py", line 416, in load_function_def_library
+    func_graph = function_def_lib.function_def_to_graph(
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\function_def_to_graph.py", line 87, in function_def_to_graph
+    importer.import_graph_def_for_function(graph_def, name="")
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\importer.py", line 414, in import_graph_def_for_function
+    return _import_graph_def_internal(
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\importer.py", line 517, in _import_graph_def_internal
+    _ProcessNewOps(graph)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\importer.py", line 250, in _ProcessNewOps
+    colocation_names = _GetColocationNames(new_op)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\framework\importer.py", line 297, in _GetColocationNames
+    class_values = op.get_attr('_class')
+KeyboardInterrupt
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-01-30_T17-36-03.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 162, in predict
+    prediction = PBMODEL(sample)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\utils\traceback_utils.py", line 70, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\function_deserialization.py", line 295, in restored_function_body
+    raise ValueError(
+ValueError: Exception encountered when calling layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer).
+
+Could not find matching concrete function to call loaded from the SavedModel. Got:
+  Positional arguments (2 total):
+    * <tf.Tensor 'inputs:0' shape=(0,) dtype=float32>
+    * False
+  Keyword arguments: {}
+
+ Expected these arguments to match one of the following 2 option(s):
+
+Option 1:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * False
+  Keyword arguments: {}
+
+Option 2:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * True
+  Keyword arguments: {}
+
+Call arguments received by layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer):
+  • args=('tf.Tensor(shape=(0,), dtype=float32)',)
+  • kwargs={'training': 'False'}
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-01-31_T17-37-02.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 234, in predict
+    prediction = model.flat_sigmoid(np.array(prediction), sensitivity=-cfg.SIGMOID_SENSITIVITY)
+KeyboardInterrupt
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-02-02_T17-40-02.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 234, in predict
+    prediction = model.flat_sigmoid(np.array(prediction), sensitivity=-cfg.SIGMOID_SENSITIVITY)
+KeyboardInterrupt
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-02-01_T17-39-03.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 234, in predict
+    prediction = model.flat_sigmoid(np.array(prediction), sensitivity=-cfg.SIGMOID_SENSITIVITY)
+KeyboardInterrupt
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-01-31_T17-37-02.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 317, in analyzeFile
+    p_sorted =  sorted(p_labels.items(), key=operator.itemgetter(1), reverse=True)
+KeyboardInterrupt
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-01-30_T17-36-03.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 162, in predict
+    prediction = PBMODEL(sample)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\utils\traceback_utils.py", line 70, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\function_deserialization.py", line 295, in restored_function_body
+    raise ValueError(
+ValueError: Exception encountered when calling layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer).
+
+Could not find matching concrete function to call loaded from the SavedModel. Got:
+  Positional arguments (2 total):
+    * <tf.Tensor 'inputs:0' shape=(0,) dtype=float32>
+    * False
+  Keyword arguments: {}
+
+ Expected these arguments to match one of the following 2 option(s):
+
+Option 1:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * False
+  Keyword arguments: {}
+
+Option 2:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * True
+  Keyword arguments: {}
+
+Call arguments received by layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer):
+  • args=('tf.Tensor(shape=(0,), dtype=float32)',)
+  • kwargs={'training': 'False'}
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-02-01_T17-39-03.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 162, in predict
+    prediction = PBMODEL(sample)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\utils\traceback_utils.py", line 70, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\function_deserialization.py", line 295, in restored_function_body
+    raise ValueError(
+ValueError: Exception encountered when calling layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer).
+
+Could not find matching concrete function to call loaded from the SavedModel. Got:
+  Positional arguments (2 total):
+    * <tf.Tensor 'inputs:0' shape=(0,) dtype=float32>
+    * False
+  Keyword arguments: {}
+
+ Expected these arguments to match one of the following 2 option(s):
+
+Option 1:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * False
+  Keyword arguments: {}
+
+Option 2:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * True
+  Keyword arguments: {}
+
+Call arguments received by layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer):
+  • args=('tf.Tensor(shape=(0,), dtype=float32)',)
+  • kwargs={'training': 'False'}
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\All\BM-1-f0a69_2024-02-02_T17-40-02.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 162, in predict
+    prediction = PBMODEL(sample)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\utils\traceback_utils.py", line 70, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\function_deserialization.py", line 295, in restored_function_body
+    raise ValueError(
+ValueError: Exception encountered when calling layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer).
+
+Could not find matching concrete function to call loaded from the SavedModel. Got:
+  Positional arguments (2 total):
+    * <tf.Tensor 'inputs:0' shape=(0,) dtype=float32>
+    * False
+  Keyword arguments: {}
+
+ Expected these arguments to match one of the following 2 option(s):
+
+Option 1:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * False
+  Keyword arguments: {}
+
+Option 2:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * True
+  Keyword arguments: {}
+
+Call arguments received by layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer):
+  • args=('tf.Tensor(shape=(0,), dtype=float32)',)
+  • kwargs={'training': 'False'}
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\BM-1-2a10f_2024-02-25_T18-15-02.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 162, in predict
+    prediction = PBMODEL(sample)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\utils\traceback_utils.py", line 70, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\function_deserialization.py", line 295, in restored_function_body
+    raise ValueError(
+ValueError: Exception encountered when calling layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer).
+
+Could not find matching concrete function to call loaded from the SavedModel. Got:
+  Positional arguments (2 total):
+    * <tf.Tensor 'inputs:0' shape=(0,) dtype=float32>
+    * False
+  Keyword arguments: {}
+
+ Expected these arguments to match one of the following 2 option(s):
+
+Option 1:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * False
+  Keyword arguments: {}
+
+Option 2:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * True
+  Keyword arguments: {}
+
+Call arguments received by layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer):
+  • args=('tf.Tensor(shape=(0,), dtype=float32)',)
+  • kwargs={'training': 'False'}
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\BM-1-2a10f_2024-02-26_T18-17-02.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 230, in predict
+    prediction = model.predict(samples)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\model.py", line 162, in predict
+    prediction = PBMODEL(sample)
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\keras\utils\traceback_utils.py", line 70, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "C:\Users\Troy\anaconda3\envs\tf\lib\site-packages\tensorflow\python\saved_model\function_deserialization.py", line 295, in restored_function_body
+    raise ValueError(
+ValueError: Exception encountered when calling layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer).
+
+Could not find matching concrete function to call loaded from the SavedModel. Got:
+  Positional arguments (2 total):
+    * <tf.Tensor 'inputs:0' shape=(0,) dtype=float32>
+    * False
+  Keyword arguments: {}
+
+ Expected these arguments to match one of the following 2 option(s):
+
+Option 1:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * False
+  Keyword arguments: {}
+
+Option 2:
+  Positional arguments (2 total):
+    * TensorSpec(shape=(None, 144000), dtype=tf.float32, name='inputs')
+    * True
+  Keyword arguments: {}
+
+Call arguments received by layer "ADVANCED_SPEC1" "                 f"(type LinearSpecLayer):
+  • args=('tf.Tensor(shape=(0,), dtype=float32)',)
+  • kwargs={'training': 'False'}
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\BM-1-2a10f_2024-02-17_T18-03-03.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 234, in predict
+    prediction = model.flat_sigmoid(np.array(prediction), sensitivity=-cfg.SIGMOID_SENSITIVITY)
+KeyboardInterrupt
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\BM-1-2a10f_2024-02-22_T18-11-02.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 234, in predict
+    prediction = model.flat_sigmoid(np.array(prediction), sensitivity=-cfg.SIGMOID_SENSITIVITY)
+KeyboardInterrupt
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\BM-1-2a10f_2024-02-20_T18-08-03.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 234, in predict
+    prediction = model.flat_sigmoid(np.array(prediction), sensitivity=-cfg.SIGMOID_SENSITIVITY)
+KeyboardInterrupt
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\BM-1-2a10f_2024-02-19_T18-06-03.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 234, in predict
+    prediction = model.flat_sigmoid(np.array(prediction), sensitivity=-cfg.SIGMOID_SENSITIVITY)
+KeyboardInterrupt
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\BM-1-2a10f_2024-02-24_T18-14-02.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 234, in predict
+    prediction = model.flat_sigmoid(np.array(prediction), sensitivity=-cfg.SIGMOID_SENSITIVITY)
+KeyboardInterrupt
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\BM-1-2a10f_2024-02-23_T18-12-02.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 234, in predict
+    prediction = model.flat_sigmoid(np.array(prediction), sensitivity=-cfg.SIGMOID_SENSITIVITY)
+KeyboardInterrupt
+
+Error: Cannot analyze audio file D:\NAS\ORI Audio\2024\Audio\BM-1-2a10f_2024-02-21_T18-09-02.flac.
+Traceback (most recent call last):
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 303, in analyzeFile
+    p = predict(chunks)
+  File "C:\Users\Troy\OneDrive\Projects\BirdNET-Analyzer-tgruetzm-2023\analyzeGPU.py", line 234, in predict
+    prediction = model.flat_sigmoid(np.array(prediction), sensitivity=-cfg.SIGMOID_SENSITIVITY)
+KeyboardInterrupt
+
