@@ -8,8 +8,8 @@ import sys
 
 
 filters = {
-    'Bubo virginianus_Great Horned Owl': .4,
-    'Strix nebulosa_Great Gray Owl': .2, #.2 seems to work best, .1 if trying to find very faint GGOWs
+    'Bubo virginianus_Great Horned Owl': .5,
+    'Strix nebulosa_Great Gray Owl': .2, #.2 seems to work best
     'Aegolius acadicus_Northern Saw-whet Owl': .3,
     'Aegolius funereus_Boreal Owl': .4,
     'Asio flammeus_Short-eared Owl': .4,
@@ -20,7 +20,9 @@ filters = {
     'Psiloscops flammeolus_Flammulated Owl': .4,
     'Surnia ulula_Northern Hawk Owl': .4,
     'Tyto alba_Barn Owl': .4,
-    'Strix varia_Barred Owl': .4
+    'Strix varia_Barred Owl': .4,
+    'Accipiter gentilis_Northern Goshawk': .2,
+    'Canis lupus_Gray Wolf': .2
 }
 
 
@@ -77,4 +79,11 @@ if __name__ == '__main__':
                         for row in results[key]:
                             outputResults.write(row)
                     
+                outputFile = outputPathBase  + fileName
+                if not os.path.exists(outputFile):
+                    if key == "Strix nebulosa_Great Gray Owl":
+                        with open(outputFile, 'w') as outputResults:
+                           print("writing: " + outputFile)
+                           for row in results[key]:
+                                outputResults.write(row)
 

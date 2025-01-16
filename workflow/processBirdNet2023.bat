@@ -1,1 +1,1 @@
-python ../analyzeGPU.py --threads 9 --batchsize 2000 --overlap 0 --slist "D:\NAS\ORI Audio\2024\species_list.txt"  --rtype audacity --sensitivity 1.5 --min_conf .1 --i "D:\NAS\ORI Audio\2024\Audio" --o "D:\NAS\ORI Audio\2024\Audio\1ResultsCombined" 
+python ../analyzeGPU.py --threads 12 --batchsize 2000 --overlap 0 --slist "Z:\\Owl Research Institute\Audio\2024\species_list.txt"  --rtype audacity --sensitivity 1.5 --min_conf .1 --i "Z:\\Owl Research Institute\Audio\2024\Audio" --o "Z:\\Owl Research Institute\Audio\2024\Audio\1ResultsCombined" 

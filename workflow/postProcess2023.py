@@ -11,12 +11,16 @@ segmentsScript = '..\segments.py'
 #python segments.py --threads 1 --slist "E:\BirdNet Audio GGOW 2023\species_list.txt" --results "E:\BirdNet Audio GGOW 2023\Missions\Strix varia_Barred Owl" --min_conf .1 --audio "E:\BirdNet Audio GGOW 2023\Missions" --o "E:\BirdNet Audio GGOW 2023\Missions-BDOW"
 
 # Directories are used for location namespy
-baseDirectory = "D:\\NAS\\ORI Audio\\2024\\"
+baseDirectory = "D:\\SynologyDrive\\Owl Research Institute\\Audio\\2024\\"
 inputPath = baseDirectory + "Audio\\"
 speciesList = {("Strix varia_Barred Owl",baseDirectory + "speciesBDOW.txt"),("Strix nebulosa_Great Gray Owl",baseDirectory + "speciesGGOW.txt"),("Asio otus_Long-eared Owl",baseDirectory + "speciesLEOW.txt"),
                ("Glaucidium gnoma_Northern Pygmy-Owl",baseDirectory + "speciesNOPO.txt"),("Aegolius acadicus_Northern Saw-whet Owl",baseDirectory + "speciesNSWO.txt"),("Megascops kennicottii_Western Screech-Owl",baseDirectory + "speciesWESO.txt"),
-               ("Aegolius funereus_Boreal Owl",baseDirectory + "speciesBOOW.txt"),("Bubo virginianus_Great Horned Owl",baseDirectory + "speciesGHOW.txt"),("Psiloscops flammeolus_Flammulated Owl",baseDirectory + "speciesFLOW.txt"),("Tyto alba_Barn Owl",baseDirectory + "speciesBNOW.txt")}
+               ("Aegolius funereus_Boreal Owl",baseDirectory + "speciesBOOW.txt"),("Psiloscops flammeolus_Flammulated Owl",baseDirectory + "speciesFLOW.txt"),
+               ("Tyto alba_Barn Owl",baseDirectory + "speciesBNOW.txt"),("Accipiter gentilis_Northern Goshawk",baseDirectory + "speciesAGOS.txt"),
+               ("Canis lupus_Gray Wolf",baseDirectory + "speciesGrayWolf.txt"),("Bubo virginianus_Great Horned Owl",baseDirectory + "speciesGHOW.txt")}
+#("Bubo virginianus_Great Horned Owl",baseDirectory + "speciesGHOW.txt"),
 
+#speciesList = {("Strix nebulosa_Great Gray Owl",baseDirectory + "speciesGGOW.txt")}
 
 def processLocation(directory):
     parts = directory.split("\\")
@@ -40,7 +44,7 @@ def processSpecies(species):
 
     print("results: " + directory + species[0])
     print("segments for: " + outputDirectory)
-    subprocess.call(['python',segmentsScript,"--min_conf",".1","--threads","1","--padding","5.0", "--slist",species[1],"--results",directory + species[0],"--audio", directory, "--o", outputDirectory])
+    subprocess.call(['python',segmentsScript,"--min_conf",".1","--threads","1","--seg_length","4.0","--padding","3.0", "--slist",species[1],"--results",directory + species[0],"--audio", directory, "--o", outputDirectory])
 
 
 

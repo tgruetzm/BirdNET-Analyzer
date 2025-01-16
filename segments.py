@@ -320,6 +320,8 @@ if __name__ == '__main__':
 
     cfg.PADDING = args.padding
 
+    cfg.SIG_LENGTH = args.seg_length
+
     # Set confidence threshold
     cfg.MIN_CONFIDENCE = max(0.01, min(0.99, float(args.min_conf)))
 
@@ -350,11 +352,12 @@ if __name__ == '__main__':
     outputDict = {}
     # Extract segments   
     #if cfg.CPU_THREADS < 2:
+    print(len(flist))
     for entry in flist:
         extractSegments(entry, outputDict)
     
     for key in outputDict.keys():
-        #print("processing output for: " + key)
+        print("processing output for: " + key)
         segmentOutputList, segmentOutputResults = outputDict[key]
         fileRate = key.split("_")[1]
         if len(segmentOutputList) == 0:
@@ -366,12 +369,12 @@ if __name__ == '__main__':
         outFile = outpath + "\\" + key + ".flac"
         if not os.path.exists(outFile):# only write file if it doesn't exist
             outputAudioArray = np.hstack(segmentOutputList)
-            reduced_noise = nr.reduce_noise(y=outputAudioArray, sr=int(fileRate), prop_decrease=.5) #.5 sounds good without reducing the signal too much
+            reduced_noise = nr.reduce_noise(y=outputAudioArray, sr=int(fileRate), prop_decrease=.1) #.5 sounds good without reducing the signal too much
             audio.saveSignal(reduced_noise, outFile,int(fileRate))
             out_string = ''
             for s in segmentOutputResults:
                 out_string += s
-                with open(outFile.replace(".flac","_results.txt"), 'w') as rfile:
+                with open(outFile.replace(".flac",".BirdNET.results.txt"), 'w') as rfile:
                     rfile.write(out_string)
 
 

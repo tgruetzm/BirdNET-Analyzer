@@ -23,10 +23,10 @@ def openAudioFile(path, sample_rate=48000, offset=0.0, duration=None):
         #torch.set_num_threads(1)
         #sig, rate = librosa.load(path, sr=sample_rate, offset=offset, duration=duration, mono=True, res_type='kaiser_fast')#kaiser_best,'kaiser_fast'
         waveform, sample_rate = torchaudio.load(path, frame_offset=offset*fileSampleRate, num_frames=duration*fileSampleRate)
-        reduced_noise = nr.reduce_noise(y=waveform.numpy(), sr=fileSampleRate, prop_decrease=.95) # .95 seems to increase positives quite a bit, might be ideal.  Does require filtering by .2 min_conf to get false positives under control
+        reduced_noise = nr.reduce_noise(y=waveform.numpy(), sr=fileSampleRate, prop_decrease=.95,n_fft=2048) # .95 seems to increase positives quite a bit, might be ideal.  Does require filtering by .2 min_conf to get false positives under control
         #.8 rolloff filters to 10k
         #.2 rolloff filters to 2400hz
-        resampler = T.Resample(fileSampleRate, 48000, dtype=waveform.dtype, lowpass_filter_width=64,rolloff=0.2,resampling_method="kaiser_window")
+        resampler = T.Resample(fileSampleRate, 48000, dtype=waveform.dtype, lowpass_filter_width=64,resampling_method="kaiser_window",rolloff=0.8)
         sig = resampler(torch.from_numpy(reduced_noise)).numpy()[0]
         #sig = resampler(waveform).numpy()[0]
         rate = 48000

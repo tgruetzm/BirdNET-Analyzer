@@ -12,12 +12,12 @@ import time
 import os
 
 
-inputPath = "E:\\Audio Import\\*.wav"
-#outputPath = "D:\\NAS\\ORI Audio\\2024\\Audio\\"
-outputPath = "E:\\delete\\"
+inputPath = "E:\\Audio Import\\Audio\\*.wav"
+outputPath = "D:\\NAS\\Owl Research Institute\\Audio\\2024\Audio\\"
+#outputPath = "E:\\delete\\"
 
 
-def readFile(file):
+def processFile(file):
     #try:
     print(file)
     fileArr = file.split("\\")
@@ -49,12 +49,14 @@ if __name__ == '__main__':
     else:
         files = glob.glob(inputPath)
         
-        #for file in glob.glob(inputPath):
-        #    readFile(file)
+    #for file in glob.glob(inputPath):
+    #       processFile(file)
 
-        with Pool(4) as p:
-            p.map(readFile, files)
-        p.join()
+    with Pool(3) as p:
+        p.map(processFile, files)
+    
+    p.join()
+
 
 
 

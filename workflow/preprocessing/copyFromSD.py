@@ -9,35 +9,45 @@ import os
 import shutil
 
 
-inputPaths = ["F:\\","H:\\"]
+inputPaths = ["F:\\","H:\\","G:\\"]
 #outputPath = "D:\\NAS\\ORI Audio\\2024\\Audio\\"
 outputPathAudio = "E:\\Audio Import\\Audio"
-outputPathMetaData = "E:\\Audio Import\\Metadata"
+outputPathMetaData = "D:\\NAS\\ORI Audio\\2024\\Metadata"
 
 
 def copyFiles(path):
-    metaFiles = glob.glob(path + "*.txt")
-    for file in metaFiles:
-        if os.path.basename(file) == "config.txt":
-            continue  # Skip this file
-        if glob.glob(outputPathMetaData + "\\" + os.path.basename(file)): #skip if exists
-            print("Skipping file: " + file)
-            continue
-        print("Copying file: " + file)
-        shutil.copy(file, outputPathMetaData)
+    if glob.glob(path):
+        metaFiles = glob.glob(path + "*.txt")
+        logFile = glob.glob(path + "*log.txt")
+        recId = str(os.path.basename(logFile[0])).split('_')[0]
+        current_date = datetime.now()
+        current_date_string = current_date.strftime("%Y-%m-%d %H-%M")
+        outputPathMetaRec = outputPathMetaData + "\\" + recId + "_" + current_date_string
+        if not glob.glob(outputPathMetaRec):
+            print("Creating: " + outputPathMetaRec)
+            os.mkdir(outputPathMetaRec)
+        for file in metaFiles:
+            if os.path.basename(file) == "config.txt":
+                continue  # Skip this file
+            outputFile = outputPathMetaRec + "\\" + os.path.basename(file)
+            if glob.glob(outputFile): #skip if exists
+                continue
+            else:
+                print("Copying file: " + file)
+                shutil.copy(file, outputPathMetaRec)
 
-    audioFiles = glob.glob(path + "Audio\\*.wav")
-    count = len(audioFiles)
-    index = 1
-    for file in audioFiles:
-        if glob.glob(outputPathAudio + "\\" + os.path.basename(file)): #skip if exists
-            print("Skipping file " + str(index) + "/" + str(count) + " "  + file)
+        audioFiles = glob.glob(path + "Audio\\*.wav")
+        count = len(audioFiles)
+        index = 1
+        for file in audioFiles:
+            if glob.glob(outputPathAudio + "\\" + os.path.basename(file)): #skip if exists
+                print("File Exists " + str(index) + "/" + str(count) + " "  + file)
+                index +=1
+                continue
+                
+            print("Copying file " + str(index) + "/" + str(count) + " "  + file)
+            shutil.copy(file, outputPathAudio)
             index +=1
-            continue
-            
-        print("Copying file " + str(index) + "/" + str(count) + " "  + file)
-        shutil.copy(file, outputPathAudio)
-        index +=1
 
 
 
@@ -54,7 +64,7 @@ if __name__ == '__main__':
         
     #for file in glob.glob(inputPath):
     #    readFile(file)
-    with Pool(2) as p:
+    with Pool(3) as p:
         p.map(copyFiles, inputPaths)
         
     p.join()

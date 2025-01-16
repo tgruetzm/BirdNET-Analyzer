@@ -11,9 +11,9 @@ import os
 # Variables
 samplingRate = 12000 #12k audio, but actual is a bit slower 
 #
-inputPath = "D:\\NAS\\ORI Audio\\2024\\Audio\\All\\BM-1short-f0a69_2024-01-30_T17-36-03.flac"
+inputPath = "C:\\Users\\Troy\\OneDrive\\Desktop\\AudioFiles\\*.flac"
 #inputPath = "D:\\BirdNet Audio 2023\\*.flac"
-outputPath = "D:\\NAS\\ORI Audio\\2024\\Audio\\All\\"
+outputPath = "C:\\Users\\Troy\\OneDrive\\Desktop\\AudioFiles\\NR\\"
 
 
 #inputPath = "C:\\Users\\Troy\\OneDrive\\GGOW Audio 2023\\*.mp3"
@@ -25,16 +25,16 @@ outputPath = "D:\\NAS\\ORI Audio\\2024\\Audio\\All\\"
 #def writeOutputFile(outputFile, data, samplerate):
     #sf.write(outputFile, data, samplerate=samplerate)
 
-def processFile(file,p):
+def processFile(file):
     print("Processing: " + file)
     start_time = datetime.now()
     fileParts = file.split("\\")
     fileName = fileParts[len(fileParts)-1]
-    outputFile = outputPath + fileName.replace("1short",str(p) + "-1short")
-    #if os.path.exists(outputFile):
-    #    return
+    outputFile = outputPath + fileName.replace(".flac",".NR.flac")
+    if os.path.exists(outputFile):
+        return
     data, rate = sf.read(file)
-    reduced_noise = nr.reduce_noise(y=data, sr=rate, prop_decrease=p)
+    reduced_noise = nr.reduce_noise(y=data, sr=rate, prop_decrease=.95,n_fft=2048)
     print(outputFile)
     sf.write(outputFile,reduced_noise, rate)
     delta_time = (datetime.now() - start_time).total_seconds()
@@ -45,8 +45,12 @@ if __name__ == '__main__':
 
     if not glob.glob(inputPath):
         print("RAW audio not found: " + inputPath)
+    else:
+        files = glob.glob(inputPath)
+        
+        #for file in glob.glob(inputPath):
+        #    readFile(file)
 
-    params = [.2,.4,.6,.8,.95]
-    #params = [10,25,50,75,100,200,250]
-    for p in params:
-        processFile(inputPath,p)
+        with Pool(6) as p:
+            p.map(processFile, files)
+        p.join()
