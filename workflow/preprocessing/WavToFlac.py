@@ -13,7 +13,7 @@ import os
 
 
 inputPath = "E:\\Audio Import\\Audio\\*.wav"
-outputPath = "D:\\NAS\\Owl Research Institute\\Audio\\2024\Audio\\"
+outputPath = "Z:\\Owl Research Institute\\Audio\\2025\Audio\\"
 #outputPath = "E:\\delete\\"
 
 

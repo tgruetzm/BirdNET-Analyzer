@@ -11,8 +11,8 @@ import shutil
 
 inputPaths = ["F:\\","H:\\","G:\\"]
 #outputPath = "D:\\NAS\\ORI Audio\\2024\\Audio\\"
-outputPathAudio = "E:\\Audio Import\\Audio"
-outputPathMetaData = "D:\\NAS\\ORI Audio\\2024\\Metadata"
+outputPathAudio = "E:\\Import"
+outputPathMetaData = "Z:\\Owl Research Institute\\Audio\\2025\\Metadata"
 
 
 def copyFiles(path):
@@ -36,7 +36,7 @@ def copyFiles(path):
                 print("Copying file: " + file)
                 shutil.copy(file, outputPathMetaRec)
 
-        audioFiles = glob.glob(path + "Audio\\*.wav")
+        audioFiles = glob.glob(path + "Audio\\*.wv")
         count = len(audioFiles)
         index = 1
         for file in audioFiles:

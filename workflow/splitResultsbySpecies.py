@@ -53,11 +53,14 @@ if __name__ == '__main__':
     inputPath = sys.argv[1]
     outputPathBase = sys.argv[2]
 
+    print(inputPath)
     if not glob.glob(inputPath):
         print("result files not found:" + inputPath)
     else:
         rawFiles = []
-        for file in glob.glob(inputPath + "*.txt"):
+        path = inputPath + "*.txt"
+        print(path)
+        for file in glob.glob(path):
             results = {}
             print("processing: " + file)
             fileParts = file.split('\\')
@@ -78,7 +81,9 @@ if __name__ == '__main__':
                         print("writing: " + outputFile)
                         for row in results[key]:
                             outputResults.write(row)
-                    
+
+
+                #is this to write the main GGOW file to make analysis easier?
                 outputFile = outputPathBase  + fileName
                 if not os.path.exists(outputFile):
                     if key == "Strix nebulosa_Great Gray Owl":
